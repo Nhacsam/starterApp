@@ -4,6 +4,7 @@ import { StyleSheet, View, Image } from 'react-native';
 
 import { Page, Button, SecondaryFlatButton } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
+import I18n from 'starterApp/src/lib/i18n';
 
 class Landing extends Component {
   props: PropsType;
@@ -15,10 +16,13 @@ class Landing extends Component {
           <Image source={theme.images.logo} />
         </View>
         <View>
-          <Button onPress={() => this.props.navigation.navigate('signup')} text="Register" />
+          <Button
+            onPress={() => this.props.navigation.navigate('signup')}
+            text={I18n.t('landing.register')}
+          />
           <SecondaryFlatButton
             onPress={() => this.props.navigation.navigate('login')}
-            text="Already have an account?"
+            text={I18n.t('landing.login')}
           />
         </View>
       </Page>

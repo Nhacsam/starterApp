@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation';
 
 import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
+import I18n from 'starterApp/src/lib/i18n';
 
 class Login extends Component {
   props: PropsType;
@@ -23,13 +24,13 @@ class Login extends Component {
     return (
       <Page backgroundImage={theme.images.landing} style={styles.page}>
         <View>
-          <TextInput type="email" placeholder="Email" />
-          <TextInput type="password" placeholder="Password" />
+          <TextInput type="email" placeholder={I18n.t('user.form.email')} />
+          <TextInput type="password" placeholder={I18n.t('user.form.password')} />
 
-          <Button onPress={() => this._goToHomePage()} text="Login" />
+          <Button onPress={() => this._goToHomePage()} text={I18n.t('login.login')} />
           <SecondaryFlatButton
             onPress={() => this.props.navigation.navigate('signup')}
-            text="I don't have an account"
+            text={I18n.t('login.signup')}
           />
         </View>
       </Page>

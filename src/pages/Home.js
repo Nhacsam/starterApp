@@ -5,10 +5,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 import { Page } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
+import I18n from 'starterApp/src/lib/i18n';
 
 class Home extends Component {
   static navigationOptions: NavigationTabScreenOptions = {
-    title: 'Home',
+    title: I18n.t('home.title'),
   };
 
   props: PropsType;
@@ -18,7 +19,7 @@ class Home extends Component {
       <Page>
         <View style={styles.container}>
           <Text style={styles.title}>
-            This is the home page
+            {I18n.t('home.text')}
           </Text>
         </View>
       </Page>

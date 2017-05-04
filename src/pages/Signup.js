@@ -6,10 +6,11 @@ import { NavigationActions } from 'react-navigation';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 import { Page, Button, TextInput } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
+import I18n from 'starterApp/src/lib/i18n';
 
 class Home extends Component {
   static navigationOptions: NavigationTabScreenOptions = {
-    title: 'Sign Up',
+    title: I18n.t('signup.title'),
   };
 
   props: PropsType;
@@ -28,12 +29,12 @@ class Home extends Component {
     return (
       <Page>
         <View style={styles.container}>
-          <TextInput type="name" placeholder="First name" />
-          <TextInput type="name" placeholder="Last name" />
-          <TextInput type="email" placeholder="Email" />
-          <TextInput type="password" placeholder="Password" />
+          <TextInput type="name" placeholder={I18n.t('user.form.firstname')} />
+          <TextInput type="name" placeholder={I18n.t('user.form.lastname')} />
+          <TextInput type="email" placeholder={I18n.t('user.form.email')} />
+          <TextInput type="password" placeholder={I18n.t('user.form.password')} />
 
-          <Button onPress={() => this._goToHomePage()} text="Sign up" />
+          <Button onPress={() => this._goToHomePage()} text={I18n.t('signup.signup')} />
         </View>
       </Page>
     );
