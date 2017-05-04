@@ -2,10 +2,12 @@ const colors = {
   primary: '#05A5D1',
   lightText: '#FAFAFA',
   background: '#F5FCFF',
+
   darkGray: '#333333',
   gray: '#777777',
   grayLight: '#999999',
   grayLighter: '#AAAAAA',
+  extraLightGray: '#DDDDDD',
 
   inputBackground: 'white',
 
@@ -32,6 +34,10 @@ export default {
     },
     placeholder: {
       color: colors.gray,
+    },
+    secondaryFlatButton: {
+      color: colors.extraLightGray,
+      fontWeight: '400',
     },
     input: {
       color: colors.darkGrey,

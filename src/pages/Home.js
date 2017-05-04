@@ -6,7 +6,6 @@ import type { NavigationTabScreenOptions } from 'react-navigation';
 import { Page } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
-console.log(theme, 'theme');
 class Home extends Component {
   static navigationOptions: NavigationTabScreenOptions = {
     title: 'Home',

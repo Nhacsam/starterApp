@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 
-import { Page, Button } from 'starterApp/src/components';
+import { Page, Button, SecondaryFlatButton } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
 class Landing extends Component {
@@ -15,8 +15,11 @@ class Landing extends Component {
           <Image source={theme.images.logo} />
         </View>
         <View>
-          <Button onPress={() => this.props.navigation.navigate('login')} text="Login" />
           <Button onPress={() => this.props.navigation.navigate('signup')} text="Register" />
+          <SecondaryFlatButton
+            onPress={() => this.props.navigation.navigate('login')}
+            text="Already have an account?"
+          />
         </View>
       </Page>
     );

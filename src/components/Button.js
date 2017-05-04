@@ -14,12 +14,16 @@ class Button extends PureComponent {
 
   render() {
     const content = this.props.text
-      ? <Text style={[styles.text]}>{this.props.text.toUpperCase()}</Text>
+      ? <Text style={[styles.text, this.props.textStyle]}>{this.props.text.toUpperCase()}</Text>
       : this.props.children;
 
     return (
-      <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
-        <View style={styles.button}>
+      <TouchableOpacity
+        onPress={this.props.onPress}
+        style={[styles.container, this.props.containerStyle]}
+        activeOpacity={0.7}
+      >
+        <View style={[styles.button, this.props.style]}>
           {content}
         </View>
       </TouchableOpacity>
@@ -53,6 +57,9 @@ type PropsTypes = {
   text?: string,
   onPress: () => void,
   children?: React.Element<*>,
+  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+  textStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+  containerStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
 };
 
 export default Button;

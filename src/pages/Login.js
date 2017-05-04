@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import { Page, Button, TextInput } from 'starterApp/src/components';
+import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
 class Login extends Component {
@@ -27,9 +27,9 @@ class Login extends Component {
           <TextInput type="password" placeholder="Password" />
 
           <Button onPress={() => this._goToHomePage()} text="Login" />
-          <Button
+          <SecondaryFlatButton
             onPress={() => this.props.navigation.navigate('signup')}
-            text="Don't have an account"
+            text="I don't have an account"
           />
         </View>
       </Page>
