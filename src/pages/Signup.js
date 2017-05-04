@@ -31,9 +31,7 @@ class Home extends Component {
           <Text style={styles.title}>
             This is the signup page
           </Text>
-          <Button onPress={() => this._goToHomePage()}>
-            SignUp
-          </Button>
+          <Button onPress={() => this._goToHomePage()} text="Sign up" />
         </View>
       </Page>
     );

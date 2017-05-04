@@ -26,9 +26,7 @@ class Home extends Component {
           <Text style={styles.title}>
             This is the Account page
           </Text>
-          <Button onPress={() => this._logout()}>
-            Logout
-          </Button>
+          <Button onPress={() => this._logout()} text="Logout" />
         </View>
       </Page>
     );

@@ -13,12 +13,8 @@ class Landing extends Component {
       <Page style={styles.content} backgroundImage={theme.images.landing}>
         <Image source={theme.images.logo} />
         <View>
-          <Button onPress={() => this.props.navigation.navigate('login')}>
-            Login
-          </Button>
-          <Button onPress={() => this.props.navigation.navigate('signup')}>
-            Register
-          </Button>
+          <Button onPress={() => this.props.navigation.navigate('login')} text="Login" />
+          <Button onPress={() => this.props.navigation.navigate('signup')} text="Register" />
         </View>
       </Page>
     );

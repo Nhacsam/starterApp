@@ -7,17 +7,20 @@ import theme from 'starterApp/src/theme';
 
 class Button extends PureComponent {
   static defaultProps: PropsTypes = {
-    children: '',
     onPress: () => {},
   };
 
   props: PropsTypes;
 
   render() {
+    const content = this.props.text
+      ? <Text style={[styles.text]}>{this.props.text.toUpperCase()}</Text>
+      : this.props.children;
+
     return (
       <TouchableOpacity onPress={this.props.onPress} style={styles.container}>
         <View style={styles.button}>
-          <Text style={[styles.text]}>{this.props.children.toUpperCase()}</Text>
+          {content}
         </View>
       </TouchableOpacity>
     );
@@ -47,8 +50,9 @@ const styles = StyleSheet.create({
 });
 
 type PropsTypes = {
-  children: string,
+  text?: string,
   onPress: () => void,
+  children?: React.Element<*>,
 };
 
 export default Button;

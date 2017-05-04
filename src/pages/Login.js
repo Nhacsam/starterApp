@@ -23,12 +23,11 @@ class Login extends Component {
     return (
       <Page backgroundImage={theme.images.landing}>
         <View>
-          <Button onPress={() => this._goToHomePage()}>
-            Login
-          </Button>
-          <Button onPress={() => this.props.navigation.navigate('signup')}>
-            Don't have an account
-          </Button>
+          <Button onPress={() => this._goToHomePage()} text="Login" />
+          <Button
+            onPress={() => this.props.navigation.navigate('signup')}
+            text="Don't have an account"
+          />
         </View>
       </Page>
     );
