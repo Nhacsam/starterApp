@@ -1,10 +1,18 @@
 // @flow
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform } from 'react-native';
-import { StackNavigator, TabNavigator, HeaderBackButton } from 'react-navigation';
+import {
+  addNavigationHelpers,
+  StackNavigator,
+  TabNavigator,
+  HeaderBackButton,
+} from 'react-navigation';
+import { connect } from 'react-redux';
 
-import theme from './theme';
+import type { NavigationScreenProp } from 'react-navigation';
+
 import * as Pages from './pages';
+import theme from './theme';
 
 const onAndroid = options => (Platform.OS === 'ios' ? undefined : options);
 
@@ -111,4 +119,27 @@ export const RootNavigator = StackNavigator(
   }
 );
 
-export default RootNavigator;
+class Scenes extends Component {
+  props: PropsType;
+  navigation: NavigationScreenProp;
+
+  get navigation() {
+    return addNavigationHelpers({
+      dispatch: this.props.dispatch,
+      state: this.props.nav,
+    });
+  }
+
+  render() {
+    return <RootNavigator navigation={this.navigation} />;
+  }
+}
+
+type PropsType = {
+  nav: Object,
+  dispatch: Function,
+};
+
+export default connect(state => ({
+  nav: state.nav,
+}))(Scenes);
