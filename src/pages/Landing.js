@@ -11,7 +11,9 @@ class Landing extends Component {
   render() {
     return (
       <Page style={styles.content} backgroundImage={theme.images.landing}>
-        <Image source={theme.images.logo} />
+        <View style={styles.imageContainer}>
+          <Image source={theme.images.logo} />
+        </View>
         <View>
           <Button onPress={() => this.props.navigation.navigate('login')} text="Login" />
           <Button onPress={() => this.props.navigation.navigate('signup')} text="Register" />
@@ -24,6 +26,9 @@ class Landing extends Component {
 const styles = StyleSheet.create({
   content: {
     justifyContent: 'space-around',
+  },
+  imageContainer: {
+    alignItems: 'center',
   },
 });
 
