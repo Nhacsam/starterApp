@@ -1,6 +1,6 @@
 // @flo
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
@@ -9,7 +9,7 @@ import theme from 'starterApp/src/theme';
 
 class Home extends Component {
   static navigationOptions: NavigationTabScreenOptions = {
-    title: 'Singup',
+    title: 'Sign Up',
   };
 
   props: PropsType;

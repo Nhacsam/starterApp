@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { Text, TextInput as RNTextInput, View, StyleSheet, ActivityIndicator } from 'react-native';
+import { Text, TextInput as RNTextInput, View, StyleSheet } from 'react-native';
 import theme from 'starterApp/src/theme';
 
 class TextInput extends Component {
