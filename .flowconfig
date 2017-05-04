@@ -14,6 +14,10 @@
 .*/Libraries/react-native/React.js
 .*/Libraries/react-native/ReactNative.js
 
+; test
+.*/*.tests.js
+.*/__tests__/*
+
 [include]
 
 [libs]
