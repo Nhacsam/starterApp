@@ -1,8 +1,12 @@
 // @flow
 import React from 'react';
+import { Platform } from 'react-native';
 import { StackNavigator, TabNavigator, HeaderBackButton } from 'react-navigation';
 
+import theme from './theme';
 import * as Pages from './pages';
+
+const onAndroid = options => (Platform.OS === 'ios' ? undefined : options);
 
 const LandingStack = StackNavigator(
   {
@@ -33,6 +37,7 @@ const SignUpStack = StackNavigator(
             onPress={() => {
               props.navigation.goBack(null);
             }}
+            tintColor={onAndroid(theme.colors.overPrimary)}
           />
         ),
       }),
@@ -40,6 +45,12 @@ const SignUpStack = StackNavigator(
   },
   {
     initialRouteName: 'signup',
+    navigationOptions: {
+      headerTintColor: onAndroid(theme.colors.overPrimary),
+      headerStyle: {
+        backgroundColor: onAndroid(theme.colors.primary),
+      },
+    },
   }
 );
 
@@ -57,6 +68,27 @@ const DashboardTab = TabNavigator(
     animationEnabled: true,
     tabBarOptions: {
       showIcon: false,
+      style: onAndroid({
+        backgroundColor: theme.colors.primary,
+      }),
+    },
+  }
+);
+
+const DashboardStack = StackNavigator(
+  {
+    dashboardTabs: {
+      screen: DashboardTab,
+    },
+  },
+  {
+    initialRouteName: 'dashboardTabs',
+    navigationOptions: {
+      headerTintColor: onAndroid(theme.colors.overPrimary),
+      headerStyle: {
+        backgroundColor: onAndroid(theme.colors.primary),
+        elevation: 0,
+      },
     },
   }
 );
@@ -70,15 +102,12 @@ export const RootNavigator = StackNavigator(
       screen: SignUpStack,
     },
     dashboard: {
-      screen: DashboardTab,
+      screen: DashboardStack,
     },
   },
   {
     initialRouteName: 'landing',
     headerMode: 'none',
-    navigationOptions: {
-      header: null,
-    },
   }
 );
 

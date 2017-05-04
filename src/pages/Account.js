@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import type { NavigationTabScreenOptions } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
 import { Page, Button } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
