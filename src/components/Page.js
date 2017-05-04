@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import theme from 'starterApp/src/theme';
 
 class Page extends Component {
-  props: PropType;
+  props: PropTypes;
 
   render() {
     const viewProps = {

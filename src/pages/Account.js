@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 });
 
 type PropsType = {
-  navigator: any,
+  navigation: any,
 };
 
 export default Home;

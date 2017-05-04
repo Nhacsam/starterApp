@@ -7,11 +7,12 @@ import theme from 'starterApp/src/theme';
 
 class Button extends PureComponent {
   static defaultProps: PropsTypes = {
-    children: null,
+    children: '',
     onPress: () => {},
   };
 
   props: PropsTypes;
+
   render() {
     return (
       <TouchableOpacity onPress={this.props.onPress} style={styles.container}>

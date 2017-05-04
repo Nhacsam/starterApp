@@ -1,12 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import {
-  StackNavigator,
-  TabNavigator,
-  addNavigationHelpers,
-  HeaderBackButton,
-} from 'react-navigation';
-import type { NavigationScreenProp } from 'react-navigation';
+import React from 'react';
+import { StackNavigator, TabNavigator, HeaderBackButton } from 'react-navigation';
 
 import * as Pages from './pages';
 

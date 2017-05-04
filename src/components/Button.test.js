@@ -6,9 +6,7 @@ import Button from './Button';
 
 describe('Button', () => {
   it('should render the button', () => {
-    const tree = renderer.create(
-      <Button>Hello</Button>,
-    ).toJSON();
+    const tree = renderer.create(<Button>Hello</Button>).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 import { Page, Button } from 'starterApp/src/components';
@@ -34,8 +34,6 @@ class Login extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});
 
 type PropsType = {
   navigation: any,
