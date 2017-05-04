@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page, Button } from 'starterApp/src/components';
+import { Page, Button, TextInput } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
 class Home extends Component {
@@ -28,9 +28,11 @@ class Home extends Component {
     return (
       <Page>
         <View style={styles.container}>
-          <Text style={styles.title}>
-            This is the signup page
-          </Text>
+          <TextInput type="name" placeholder="First name" />
+          <TextInput type="name" placeholder="Last name" />
+          <TextInput type="email" placeholder="Email" />
+          <TextInput type="password" placeholder="Password" />
+
           <Button onPress={() => this._goToHomePage()} text="Sign up" />
         </View>
       </Page>

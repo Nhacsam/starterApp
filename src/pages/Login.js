@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import { Page, Button } from 'starterApp/src/components';
+import { Page, Button, TextInput } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
 class Login extends Component {
@@ -21,8 +21,11 @@ class Login extends Component {
 
   render() {
     return (
-      <Page backgroundImage={theme.images.landing}>
+      <Page backgroundImage={theme.images.landing} style={styles.page}>
         <View>
+          <TextInput type="email" placeholder="Email" />
+          <TextInput type="password" placeholder="Password" />
+
           <Button onPress={() => this._goToHomePage()} text="Login" />
           <Button
             onPress={() => this.props.navigation.navigate('signup')}
@@ -33,6 +36,12 @@ class Login extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  page: {
+    paddingTop: 50,
+  },
+});
 
 type PropsType = {
   navigation: any,
