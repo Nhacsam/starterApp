@@ -1,24 +1,36 @@
 {
-	"name": "starterApp",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"react": "16.0.0-alpha.6",
-		"react-native": "0.44.0",
-		"react-navigation": "^1.0.0-beta.9"
-	},
-	"devDependencies": {
-		"babel-jest": "19.0.0",
-		"babel-preset-react-native": "1.9.1",
-		"babel-preset-react-native-stage-0": "^1.0.1",
-		"jest": "19.0.2",
-		"react-test-renderer": "16.0.0-alpha.6"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "starterApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "npm run test:unit",
+    "test:unit": "jest",
+    "test:lint": "eslint . --quiet"
+  },
+  "dependencies": {
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.0",
+    "react-navigation": "^1.0.0-beta.9"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "19.0.0",
+    "babel-preset-react-native": "^1.9.1",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "3.0.*",
+    "eslint-plugin-react": "^6.10.3",
+    "jest": "19.0.2",
+    "react-test-renderer": "16.0.0-alpha.6"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleNameMapper": {
+      "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/jest/FileStub.js"
+    }
+  }
 }
