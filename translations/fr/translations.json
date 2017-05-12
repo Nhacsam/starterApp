@@ -26,6 +26,7 @@
       "firstname": "Prénom",
       "lastname": "Nom",
       "password": "Mot de passe"
-    }
+    },
+    "registerFailure": "Une erreur est survenue à l'inscription"
   }
 }

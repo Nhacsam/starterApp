@@ -1,36 +1,25 @@
 // @flow
 
 import { combineReducers } from 'redux';
-import { RootNavigator } from 'starterApp/src/Scenes';
 
-import type { NavigationState } from 'react-navigation';
+import { userReducer } from './User';
+import type { UserStateType, UserActionType } from './User';
 
-const routerReducer = (state, action) => {
-  if (action.type.startsWith('Navigation/')) {
-    const { type, routeName } = action;
-    const lastRoute = state.routes[state.routes.length - 1];
-    if (type === lastRoute.type && routeName === lastRoute.routeName) {
-      console.warn(
-        'You press the navigation button two times, pushing two times to the same route.\n\n' +
-          'The last dispatch was canceled. \n\n' +
-          'If the call was intended, you can add an exception in redux routing.'
-      );
-      return state || {};
-    }
-  }
-  return RootNavigator.router.getStateForAction(action, state);
-};
+import { navigationReducer } from './Navigation';
 
-const appReducer = combineReducers({
-  nav: routerReducer,
-});
-
-const initialState = {};
-
-const rootReducer = (state: any = initialState, action: any = {}) => appReducer(state, action);
+import type { NavigationState, NavigationAction } from 'react-navigation';
 
 export type StateType = {
   nav: NavigationState,
+  user: UserStateType,
 };
+export type ActionType = UserActionType | NavigationAction;
+
+const appReducer = combineReducers({
+  nav: navigationReducer,
+  user: userReducer,
+});
+
+const rootReducer = (state: StateType, action: ActionType): StateType => appReducer(state, action);
 
 export default rootReducer;

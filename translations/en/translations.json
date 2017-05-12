@@ -26,6 +26,7 @@
       "firstname": "First name",
       "lastname": "Last name",
       "password": "Password"
-    }
+    },
+    "registerFailure": "Register error"
   }
 }

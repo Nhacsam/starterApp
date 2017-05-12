@@ -42,5 +42,9 @@ export default {
     input: {
       color: colors.darkGrey,
     },
+    error: {
+      color: colors.error,
+      fontSize: 13,
+    },
   },
 };
