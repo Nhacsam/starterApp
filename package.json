@@ -41,6 +41,10 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": ["<rootDir>/jest/setup.js"],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation)"
+    ],
     "moduleNameMapper": {
       "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/jest/FileStub.js"
     }
