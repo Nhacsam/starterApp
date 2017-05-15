@@ -1,3 +1,4 @@
+// @flow weak
 const apiUrl = 'http://0.0.0.0:3000/api';
 
 if (__DEV__) {
@@ -13,9 +14,10 @@ const checkStatus = response => {
     return response;
   }
   return response.json().then(data => {
-    const error = new Error(response.statusText);
-    error.response = data;
-    throw error;
+    return Promise.reject({
+      ...response,
+      data,
+    });
   });
 };
 
@@ -35,8 +37,6 @@ export const request = (route, method = 'GET', payload = null, additionalHeaders
   }).then(checkStatus);
 };
 
-export const signup = user => {
-  return new Promise(success => setTimeout(() => success(), 500)).then(() =>
-    request('/Users', 'POST', user)
-  );
-};
+export const signup = user => request('/Users', 'POST', user);
+export const login = (email: string, password: string) =>
+  request('/Users/login', 'POST', { email, password });
