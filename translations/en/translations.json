@@ -13,6 +13,7 @@
     "register": "Register"
   },
   "login": {
+    "failure": "Invalid credentials",
     "login": "Login",
     "signup": "I don't have an account"
   },

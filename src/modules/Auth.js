@@ -1,60 +1,57 @@
 // @flow
-import pick from 'lodash/pick';
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, put, all, race, take } from 'redux-saga/effects';
 
 import { reset } from './Navigation';
-import * as api from 'starterApp/src/lib/api';
+import { login as sendLogin, type AuthModelActionType } from './Model/Auth';
 
 import type { StateType } from './reducers';
 
+export { logout } from './Model/Auth';
+
 // ACTION CREATORS
 export const login = (email: string, password: string): AuthActionType => ({
-  type: 'AUTH.LOGIN',
+  type: 'AUTH.LOGIN_PRESS',
   payload: { email, password },
 });
-export const loginSuccess = (payload: AuthStateType): AuthActionType => ({
-  type: 'AUTH.LOGIN_SUCCESS',
-  payload,
-});
-export const loginFail = (): AuthActionType => ({ type: 'AUTH.LOGIN_FAILURE' });
 
-export type AuthActionType =
-  | {
-      type: 'AUTH.LOGIN',
-      payload: {
-        email: string,
-        password: string,
-      },
-    }
-  | {
-      type: 'AUTH.LOGIN_SUCCESS',
-      payload: AuthStateType,
-    }
-  | {
-      type: 'AUTH.LOGIN_FAILURE',
-    };
+export type AuthActionType = {
+  type: 'AUTH.LOGIN_PRESS',
+  payload: {
+    email: string,
+    password: string,
+  },
+};
 
 export type AuthStateType = {
-  accessToken: ?string,
-  ttl?: number,
-  created?: string,
-  userId?: number,
+  sendingLogin: boolean,
+  loginFailure: boolean,
 };
 
 const initialState: AuthStateType = {
-  accessToken: null,
+  sendingLogin: false,
+  loginFailure: false,
 };
 
 // REDUCER
 export function authReducer(
   state: AuthStateType = initialState,
-  action: AuthActionType
+  action: AuthActionType | AuthModelActionType
 ): AuthStateType {
   switch (action.type) {
+    case 'AUTH.LOGIN_PRESS':
+      return {
+        sendingLogin: true,
+        loginFailure: false,
+      };
     case 'AUTH.LOGIN_SUCCESS':
       return {
-        ...state,
-        ...action.payload,
+        sendingLogin: false,
+        loginFailure: false,
+      };
+    case 'AUTH.LOGIN_FAILURE':
+      return {
+        sendingLogin: false,
+        loginFailure: true,
       };
     default:
       return state;
@@ -62,25 +59,26 @@ export function authReducer(
 }
 
 // SELECTORS
-export const accessTokenSelector = (state: StateType): ?string => state.auth.accessToken;
+export const sendingLoginSelector = (state: StateType): boolean => state.auth.sendingLogin;
+export const loginFailureSelector = (state: StateType): boolean => state.auth.loginFailure;
 
 // SAGAS
 function* sendLoginSaga(action): Generator<*, *, *> {
   const { email, password } = action.payload;
-  try {
-    const result = yield call(api.login, email, password);
-    yield put(
-      loginSuccess({
-        accessToken: result.id,
-        ...pick(result, ['ttl', 'created', 'userId']),
-      })
-    );
+  yield put(sendLogin(email, password));
+  const result = yield race({
+    success: take('AUTH.LOGIN_SUCCESS'),
+    failure: take('AUTH.LOGIN_FAILURE'),
+  });
+  if (result.success) {
     yield put(reset('dashboard'));
-  } catch (e) {
-    yield put(loginFail());
   }
 }
 
+function* logoutSaga(action): Generator<*, *, *> {
+  yield put(reset('landing'));
+}
+
 export function* authSaga(): Generator<*, *, *> {
-  yield all([takeLatest('AUTH.LOGIN', sendLoginSaga)]);
+  yield all([takeLatest('AUTH.LOGIN_PRESS', sendLoginSaga), takeLatest('AUTH.LOGOUT', logoutSaga)]);
 }

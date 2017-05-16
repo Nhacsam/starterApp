@@ -2,9 +2,12 @@
 import { connect } from 'react-redux';
 import Login from './Login';
 
-import { login } from 'starterApp/src/modules/Auth';
+import { login, sendingLoginSelector, loginFailureSelector } from 'starterApp/src/modules/Auth';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  posting: sendingLoginSelector(state),
+  failure: loginFailureSelector(state),
+});
 
 const mapDispatchToProps = {
   login,

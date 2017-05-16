@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/components';
@@ -12,7 +12,7 @@ class Login extends Component {
   state: StateType;
   password: TextInput;
 
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
     this.state = {
       email: '',
@@ -44,7 +44,12 @@ class Login extends Component {
             onSubmitEditing={this.sendLogin}
           />
 
-          <Button onPress={() => this.props.sendLogin()} text={I18n.t('login.login')} />
+          {this.props.failure && <Text style={styles.error}>{I18n.t('login.failure')}</Text>}
+          <Button
+            onPress={() => this.sendLogin()}
+            text={I18n.t('login.login')}
+            fetching={this.props.posting}
+          />
           <SecondaryFlatButton
             onPress={() => this.props.navigation.navigate('signup')}
             text={I18n.t('login.signup')}
@@ -59,11 +64,18 @@ const styles = StyleSheet.create({
   page: {
     paddingTop: 50,
   },
+  error: {
+    textAlign: 'right',
+    backgroundColor: 'transparent',
+    ...theme.fonts.error,
+  },
 });
 
 type PropsType = {
   navigation: any,
   login: Function,
+  posting: boolean,
+  failure: boolean,
 };
 
 type StateType = {
