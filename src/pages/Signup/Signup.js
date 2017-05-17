@@ -1,4 +1,4 @@
-// @flo
+// @flow
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
@@ -7,7 +7,7 @@ import { Page, Button, TextInput } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
-import type UserType from 'staterApp/src/modules/User';
+import type { UserCreateFormType } from 'starterApp/src/modules/Model/User';
 
 class Home extends Component {
   static navigationOptions: NavigationTabScreenOptions = {
@@ -17,9 +17,9 @@ class Home extends Component {
   lastNameInput: TextInput;
   emailInput: TextInput;
   passwordInput: TextInput;
-  state: UserType;
+  state: UserCreateFormType;
 
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
 
     this.state = {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 
 type PropsType = {
   navigator: any,
-  register: (user: UserType) => {},
+  register: (user: UserCreateFormType) => {},
   saving: boolean,
   failure: boolean,
 };

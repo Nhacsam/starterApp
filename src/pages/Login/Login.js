@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';

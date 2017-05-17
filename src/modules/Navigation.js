@@ -3,8 +3,7 @@ import { NavigationActions } from 'react-navigation';
 
 import { RootNavigator } from 'starterApp/src/Scenes';
 
-import type { NavigationState } from 'react-navigation';
-import type { ActionType } from './reducers';
+import type { NavigationState, NavigationAction } from 'react-navigation';
 
 // ACTION CREATORS
 export const reset = (routeName: string) => {
@@ -18,7 +17,10 @@ export const reset = (routeName: string) => {
 };
 
 // REDUCER
-export const navigationReducer = (state: NavigationState, action: ActionType): NavigationState => {
+export const navigationReducer = (
+  state: NavigationState,
+  action: NavigationAction
+): NavigationState => {
   if (action.type === 'Navigation/NAVIGATE') {
     const { type, routeName } = action;
     const lastRoute = state.routes[state.routes.length - 1];

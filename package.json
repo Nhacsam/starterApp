@@ -12,6 +12,7 @@
     "test:flow:check": "flow check"
   },
   "dependencies": {
+    "normalizr": "^3.2.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-i18n": "^1.0.0",
@@ -41,7 +42,9 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFiles": ["<rootDir>/jest/setup.js"],
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation)"
     ],
