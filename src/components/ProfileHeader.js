@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, ActivityIndicator } from 'react-native';
 import type { UserType } from 'modelDefinition';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Page } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
@@ -14,10 +15,11 @@ class ProfileHeader extends Component {
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image source={theme.images.defaultUserImage} style={styles.userImage} />
-          {!user &&
-            <View style={styles.imageOverlay}>
-              <ActivityIndicator style={{ alignSelf: 'center' }} color="white" />
-            </View>}
+          <View style={styles.imageOverlay}>
+            {user
+              ? <Icon name="pencil" color="white" size={25} />
+              : <ActivityIndicator style={{ alignSelf: 'center' }} color="white" />}
+          </View>
         </View>
         {user &&
           <View>

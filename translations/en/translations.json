@@ -1,7 +1,6 @@
 {
   "account": {
     "logout": "Logout",
-    "text": "This is the account page !",
     "title": "Account"
   },
   "home": {

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 import type { UserType } from 'modelDefinition';
 
-import { Page, Button, ProfileHeader } from 'starterApp/src/components';
+import { Page, Button, ProfileHeader, ButtonCard } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
@@ -20,12 +20,7 @@ class Home extends Component {
     return (
       <Page noPadding noNavBar>
         <ProfileHeader user={this.props.currentUser} />
-        <View style={styles.container}>
-          <Text style={styles.title}>
-            {I18n.t('account.text')}
-          </Text>
-          <Button onPress={() => this.props.logout()} text={I18n.t('account.logout')} />
-        </View>
+        <ButtonCard onPress={() => this.props.logout()} text={I18n.t('account.logout')} />
       </Page>
     );
   }
