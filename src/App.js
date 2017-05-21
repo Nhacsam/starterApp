@@ -1,8 +1,9 @@
-// @flow weak
+// @flow
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 
 import Scenes from './Scenes';
+
 import createStore from './modules/store';
 
 class App extends Component {

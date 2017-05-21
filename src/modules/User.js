@@ -2,9 +2,7 @@
 import { takeLatest, put, all, race, take } from 'redux-saga/effects';
 
 import { create, type UserType, type UserModelActionType } from './Model/User';
-
 import { reset } from './Navigation';
-
 import type { StateType } from './reducers';
 
 // ACTION CREATORS
@@ -71,9 +69,10 @@ function* sendRegisterSaga(action): Generator<*, *, *> {
     success: take('USER.CREATE_SUCCESS'),
     failure: take('USER.CREATE_FAILURE'),
   });
-  if (result.success) {
-    yield put(reset('dashboard'));
+  if (result.failure) {
+    return;
   }
+  yield put(reset('dashboard'));
 }
 
 export function* userSaga(): Generator<*, *, *> {
