@@ -6,6 +6,7 @@ import { create, fetch as fetchUser, userSelector } from './Model/User';
 import type { UserModelActionType } from './Model/User';
 
 import { authUserIdSelector } from './Model/Auth';
+import { login } from './Auth';
 import { reset, takeEveryPageEnter } from './Navigation';
 import type { StateType } from './reducers';
 
@@ -83,7 +84,7 @@ function* sendRegisterSaga(action): Generator<*, *, *> {
   if (result.failure) {
     return;
   }
-  yield put(reset('dashboard'));
+  yield put(login(user.email, user.password));
 }
 
 function* fetchCurrentUserSaga(): Generator<*, *, *> {

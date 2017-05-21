@@ -22,7 +22,6 @@ class ProfileHeader extends Component {
         {user &&
           <View>
             <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
-            <Text style={styles.email}>{user.email}</Text>
           </View>}
 
       </View>
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.primary,
     alignSelf: 'stretch',
-    flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
   },
@@ -50,13 +48,9 @@ const styles = StyleSheet.create({
   },
   name: {
     color: 'white',
-    marginVertical: 3,
+    marginTop: 10,
     fontSize: 18,
-  },
-  email: {
-    color: 'white',
-    opacity: 0.9,
-    marginVertical: 3,
+    textAlign: 'center',
   },
   imageOverlay: {
     position: 'absolute',
