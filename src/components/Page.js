@@ -11,7 +11,7 @@ class Page extends Component {
         styles.page,
         {
           paddingTop: this.props.noNavBar ? 0 : 16,
-          paddingHorizontal: this.props.noMargin ? 0 : 32,
+          paddingHorizontal: this.props.noPadding ? 0 : 32,
           backgroundColor: this.props.backgroundColor,
           width: Dimensions.get('window').width,
         },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 type PropTypes = {
   children: React.Element<*>,
-  noMargin: boolean,
+  noPadding: boolean,
   noNavBar: boolean,
   backgroundColor: string,
   style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
@@ -47,7 +47,7 @@ type PropTypes = {
 
 Page.defaultProps = {
   children: null,
-  noMargin: false,
+  noPadding: false,
   noNavBar: false,
   backgroundColor: theme.colors.background,
 };

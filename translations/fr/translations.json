@@ -1,7 +1,6 @@
 {
   "account": {
     "logout": "Déconnexion",
-    "text": "Ceci est la page \"Mon Compte\"",
     "title": "Mon compte"
   },
   "home": {

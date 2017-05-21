@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import type { NavigationTabScreenOptions } from 'react-navigation';
 import { NavigationActions } from 'react-navigation';
-import { Page, Button } from 'starterApp/src/components';
+import type { NavigationTabScreenOptions } from 'react-navigation';
+import type { UserType } from 'modelDefinition';
+
+import { Page, Button, ProfileHeader, ButtonCard } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
@@ -27,13 +29,9 @@ class Home extends Component {
 
   render() {
     return (
-      <Page>
-        <View style={styles.container}>
-          <Text style={styles.title}>
-            {I18n.t('account.text')}
-          </Text>
-          <Button onPress={() => this._logout()} text={I18n.t('account.logout')} />
-        </View>
+      <Page noPadding noNavBar>
+        <ProfileHeader user={{ firstName: 'John', lastName: 'Doe' }} />
+        <ButtonCard onPress={() => this._logout()} text={I18n.t('account.logout')} />
       </Page>
     );
   }

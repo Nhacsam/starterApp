@@ -1,3 +1,6 @@
+/**
+ * @providesModule theme
+ */
 const colors = {
   primary: '#1565c0',
   lightText: '#FAFAFA',
@@ -29,8 +32,9 @@ export default {
       backgroundColor: 'transparent',
     },
     button: {
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: '700',
+      color: colors.darkGray,
     },
     placeholder: {
       color: colors.gray,
@@ -43,4 +47,5 @@ export default {
       color: colors.darkGrey,
     },
   },
+  defaultPadding: 32,
 };
