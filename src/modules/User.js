@@ -1,8 +1,12 @@
 // @flow
-import { takeLatest, put, all, race, take } from 'redux-saga/effects';
+import { takeLatest, put, all, race, take, select } from 'redux-saga/effects';
+import type { UserType } from 'modelDefinition';
 
-import { create, type UserType, type UserModelActionType } from './Model/User';
-import { reset } from './Navigation';
+import { create, fetch as fetchUser, userSelector } from './Model/User';
+import type { UserModelActionType } from './Model/User';
+
+import { authUserIdSelector } from './Model/Auth';
+import { reset, takeEveryPageEnter } from './Navigation';
 import type { StateType } from './reducers';
 
 // ACTION CREATORS
@@ -60,6 +64,13 @@ export function userReducer(
 // SELECTORS
 export const registeringSelector = (state: StateType): boolean => state.user.registering;
 export const registeringFailureSelector = (state: StateType): boolean => state.user.registerFailure;
+export const currentUserSelector = (state: StateType): ?UserType => {
+  const userId = authUserIdSelector(state);
+  if (!userId) {
+    return null;
+  }
+  return userSelector(state, userId);
+};
 
 // SAGAS
 function* sendRegisterSaga(action): Generator<*, *, *> {
@@ -75,6 +86,17 @@ function* sendRegisterSaga(action): Generator<*, *, *> {
   yield put(reset('dashboard'));
 }
 
+function* fetchCurrentUserSaga(): Generator<*, *, *> {
+  const userId = yield select(authUserIdSelector);
+  if (!userId) {
+    return;
+  }
+  yield put(fetchUser(userId));
+}
+
 export function* userSaga(): Generator<*, *, *> {
-  yield all([takeLatest('USER.REGISTER', sendRegisterSaga)]);
+  yield all([
+    takeLatest('USER.REGISTER', sendRegisterSaga),
+    takeEveryPageEnter('account', fetchCurrentUserSaga),
+  ]);
 }

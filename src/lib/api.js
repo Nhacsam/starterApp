@@ -1,5 +1,17 @@
-// @flow weak
+// @flow
+import { accessTokenSelector } from 'starterApp/src/modules/Model/Auth';
+import type { UserType, AuthType } from 'modelDefinition';
+import type { Store } from 'redux';
+
 const apiUrl = 'http://0.0.0.0:3000/api';
+
+let store: ?Store;
+const getAccessToken = (): ?string => {
+  if (!store) {
+    return null;
+  }
+  return accessTokenSelector(store.getState());
+};
 
 if (__DEV__) {
   global.XMLHttpRequest = global.originalXMLHttpRequest
@@ -8,7 +20,7 @@ if (__DEV__) {
   global.FormData = global.originalFormData ? global.originalFormData : global.FormData;
 }
 
-const checkStatus = response => {
+const checkStatus = (response: Response): Promise<Object> => {
   if (response.status >= 200 && response.status < 300) {
     if (response.status !== 204) return response.json();
     return response;
@@ -21,14 +33,23 @@ const checkStatus = response => {
   });
 };
 
-export const request = (route, method = 'GET', payload = null, additionalHeaders = {}) => {
-  if (!route) return;
+export const request = (
+  route: string,
+  method: string = 'GET',
+  payload: any = null,
+  additionalHeaders: Headers = {}
+): Promise<Object> => {
+  if (!route) return Promise.reject(new Error('No url specified'));
   const url = `${apiUrl}${route}`;
 
+  const accessToken = getAccessToken();
   const headers = {
     'Content-Type': 'application/json',
     ...additionalHeaders,
   };
+  if (accessToken && !headers['Authorization']) {
+    headers['Authorization'] = accessToken;
+  }
 
   return fetch(url, {
     method,
@@ -37,6 +58,10 @@ export const request = (route, method = 'GET', payload = null, additionalHeaders
   }).then(checkStatus);
 };
 
-export const signup = user => request('/Users', 'POST', user);
-export const login = (email: string, password: string) =>
+export const setStore = (newStore: Store): Store => (store = newStore);
+
+// API URL
+export const signup = (user: UserType): Promise<UserType> => request('/Users', 'POST', user);
+export const login = (email: string, password: string): Promise<AuthType> =>
   request('/Users/login', 'POST', { email, password });
+export const getUser = (id: number): Promise<UserType> => request(`/Users/${id}`);

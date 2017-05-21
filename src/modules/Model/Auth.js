@@ -1,9 +1,9 @@
 // @flow
-import pick from 'lodash/pick';
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import * as api from 'starterApp/src/lib/api';
 
+import type { AuthType } from 'modelDefinition';
 import type { StateType } from '../reducers';
 
 // ACTION CREATORS
@@ -28,22 +28,15 @@ export type AuthModelActionType =
     }
   | {
       type: 'AUTH.LOGIN_SUCCESS',
-      payload: AuthModelStateType,
+      payload: AuthType,
     }
   | {
       type: 'AUTH.LOGIN_FAILURE' | 'AUTH.LOGOUT',
     };
 
-export type AuthModelStateType = {
-  accessToken: ?string,
-  ttl?: number,
-  created?: string,
-  userId?: number,
-};
+export type AuthModelStateType = $Shape<AuthType>;
 
-const initialState: AuthModelStateType = {
-  accessToken: null,
-};
+const initialState: AuthModelStateType = {};
 
 // REDUCER
 export function authModelReducer(
@@ -64,19 +57,15 @@ export function authModelReducer(
 }
 
 // SELECTORS
-export const accessTokenSelector = (state: StateType): ?string => state.model.auth.accessToken;
+export const accessTokenSelector = (state: StateType): ?string => state.model.auth.id;
+export const authUserIdSelector = (state: StateType): ?number => state.model.auth.userId;
 
 // SAGAS
 function* sendLoginSaga(action): Generator<*, *, *> {
   const { email, password } = action.payload;
   try {
     const result = yield call(api.login, email, password);
-    yield put(
-      loginSuccess({
-        accessToken: result.id,
-        ...pick(result, ['ttl', 'created', 'userId']),
-      })
-    );
+    yield put(loginSuccess(result));
   } catch (e) {
     yield put(loginFail());
   }

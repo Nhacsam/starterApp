@@ -20,6 +20,7 @@ export default {
   images: {
     landing: require('./images/landing.jpg'),
     logo: require('./images/logo.png'),
+    defaultUserImage: require('./images/default-user-image.png'),
   },
   fonts: {
     pageTitle: {

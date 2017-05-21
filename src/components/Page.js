@@ -4,14 +4,15 @@ import theme from 'starterApp/src/theme';
 
 class Page extends Component {
   props: PropTypes;
+  static DEFAULT_PADDING = 32;
 
   render() {
     const viewProps = {
       style: [
         styles.page,
         {
-          paddingTop: this.props.noNavBar ? 0 : 16,
-          paddingHorizontal: this.props.noMargin ? 0 : 32,
+          paddingTop: this.props.noNavBar ? 0 : 11,
+          paddingHorizontal: this.props.noPadding ? 0 : Page.DEFAULT_PADDING,
           backgroundColor: this.props.backgroundColor,
           width: Dimensions.get('window').width,
         },
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
 
 type PropTypes = {
   children: React.Element<*>,
-  noMargin: boolean,
+  noPadding: boolean,
   noNavBar: boolean,
   backgroundColor: string,
   style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
@@ -47,7 +48,7 @@ type PropTypes = {
 
 Page.defaultProps = {
   children: null,
-  noMargin: false,
+  noPadding: false,
   noNavBar: false,
   backgroundColor: theme.colors.background,
 };

@@ -1,5 +1,6 @@
 // @flow
 import { NavigationActions } from 'react-navigation';
+import { take, takeEvery } from 'redux-saga/effects';
 
 import { RootNavigator } from 'starterApp/src/Scenes';
 
@@ -35,3 +36,19 @@ export const navigationReducer = (
   }
   return RootNavigator.router.getStateForAction(action, state);
 };
+
+// EFFECTS
+const generateActionPageEnterMatcherFunction = (routeName: string) => (
+  action: NavigationAction
+): boolean => {
+  if (action.type !== 'Navigation/NAVIGATE') {
+    return false;
+  }
+  return action.routeName === routeName;
+};
+
+export const takePageEnter = (routeName: string) =>
+  take(generateActionPageEnterMatcherFunction(routeName));
+
+export const takeEveryPageEnter = (routeName: string, saga: Function, ...args: *) =>
+  takeEvery(generateActionPageEnterMatcherFunction(routeName), saga, ...args);
