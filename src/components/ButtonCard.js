@@ -14,8 +14,8 @@ type Props = {
 class ButtonCard extends Component<void, Props, void> {
   render() {
     return (
-      <Touchable onPress={this.props.onPress}>
-        <View style={styles.card}>
+      <Touchable onPress={this.props.onPress} style={styles.card}>
+        <View style={styles.contentContainer}>
           <Text style={styles.text}>
             {this.props.text}
           </Text>
@@ -30,12 +30,16 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: 'white',
     alignSelf: 'stretch',
-    minHeight: 55,
     paddingHorizontal: theme.defaultPadding / 2,
+  },
+  contentContainer: {
+    borderBottomWidth: 1,
+    borderColor: theme.colors.grayLighter,
 
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    minHeight: 55,
   },
   text: {
     ...theme.fonts.button,

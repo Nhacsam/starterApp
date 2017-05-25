@@ -1,7 +1,8 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
+import Touchable from './Touchable';
 
 import theme from 'starterApp/src/theme';
 
@@ -13,31 +14,22 @@ class Button extends PureComponent {
   props: PropsTypes;
 
   render() {
-    const content = this.props.text
-      ? <Text style={[styles.text, this.props.textStyle]}>{this.props.text.toUpperCase()}</Text>
-      : this.props.children;
+    const { style, text, textStyle, children, ...rest } = this.props;
+    const content = text
+      ? <Text style={[styles.text, textStyle]}>
+          {text.toUpperCase()}
+        </Text>
+      : children;
 
     return (
-      <TouchableOpacity
-        onPress={this.props.onPress}
-        style={[styles.container, this.props.containerStyle]}
-        activeOpacity={0.7}
-      >
-        <View style={[styles.button, this.props.style]}>
-          {content}
-        </View>
-      </TouchableOpacity>
+      <Touchable style={[styles.button, style]} {...rest}>
+        {content}
+      </Touchable>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: 48,
-    marginVertical: 8,
-  },
   button: {
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -45,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 8,
     borderRadius: 5,
+    marginVertical: 8,
   },
   text: {
     ...theme.fonts.button,
@@ -59,7 +52,6 @@ type PropsTypes = {
   children?: React.Element<*>,
   style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
   textStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  containerStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
 };
 
 export default Button;

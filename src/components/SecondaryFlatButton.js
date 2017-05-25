@@ -8,7 +8,15 @@ import Button from './Button';
 
 class SecondaryFlatButton extends Component {
   render() {
-    return <Button style={styles.button} textStyle={styles.textStyle} {...this.props} />;
+    return (
+      <Button
+        style={styles.button}
+        textStyle={styles.textStyle}
+        borderless
+        useForeground
+        {...this.props}
+      />
+    );
   }
 }
 
