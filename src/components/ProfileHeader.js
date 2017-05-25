@@ -4,23 +4,30 @@ import { StyleSheet, View, Image, Text, ActivityIndicator } from 'react-native';
 import type { UserType } from 'modelDefinition';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Page } from 'starterApp/src/components';
+import { Page, Touchable } from 'components';
 import theme from 'starterApp/src/theme';
 
-class ProfileHeader extends Component {
+type Props = {
+  user: ?UserType,
+  onPress: ?Function,
+};
+
+class ProfileHeader extends Component<void, Props, void> {
   render() {
     const { user } = this.props;
 
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={theme.images.defaultUserImage} style={styles.userImage} />
-          <View style={styles.imageOverlay}>
-            {user
-              ? <Icon name="pencil" color="white" size={25} />
-              : <ActivityIndicator style={{ alignSelf: 'center' }} color="white" />}
+        <Touchable onPress={this.props.onPress} useOpacity>
+          <View style={styles.imageContainer}>
+            <Image source={theme.images.defaultUserImage} style={styles.userImage} />
+            <View style={styles.imageOverlay}>
+              {user
+                ? <Icon name="pencil" color="white" size={25} />
+                : <ActivityIndicator style={{ alignSelf: 'center' }} color="white" />}
+            </View>
           </View>
-        </View>
+        </Touchable>
         {user &&
           <View>
             <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
@@ -66,8 +73,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-type PropTypes = {
-  user: ?UserType,
-};
 
 export default ProfileHeader;

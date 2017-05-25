@@ -1,7 +1,8 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, ActivityIndicator } from 'react-native';
+import Touchable from './Touchable';
 
 import theme from 'starterApp/src/theme';
 
@@ -9,43 +10,31 @@ class Button extends PureComponent {
   static defaultProps: PropsTypes = {
     onPress: () => {},
     fetching: false,
+    borderless: false,
   };
 
   props: PropsTypes;
 
   render() {
+    const { style, children, text, textStyle, fetching, ...rest } = this.props;
     let content;
-    if (this.props.fetching) {
+    if (fetching) {
       content = <ActivityIndicator color={theme.colors.overPrimary} />;
-    } else if (this.props.text) {
-      content = (
-        <Text style={[styles.text, this.props.textStyle]}>{this.props.text.toUpperCase()}</Text>
-      );
+    } else if (text) {
+      content = <Text style={[styles.text, textStyle]}>{text.toUpperCase()}</Text>;
     } else {
-      content = this.props.children;
+      content = children;
     }
 
     return (
-      <TouchableOpacity
-        onPress={this.props.onPress}
-        style={[styles.container, this.props.containerStyle]}
-        activeOpacity={0.7}
-      >
-        <View style={[styles.button, this.props.style]}>
-          {content}
-        </View>
-      </TouchableOpacity>
+      <Touchable style={[styles.button, style]} {...rest}>
+        {content}
+      </Touchable>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: 48,
-    marginVertical: 8,
-  },
   button: {
     alignSelf: 'stretch',
     justifyContent: 'center',
@@ -53,6 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 8,
     borderRadius: 5,
+    marginVertical: 8,
   },
   text: {
     ...theme.fonts.button,
@@ -67,8 +57,8 @@ type PropsTypes = {
   children?: React.Element<*>,
   style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
   textStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  containerStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
   fetching: boolean,
+  borderless: boolean,
 };
 
 export default Button;

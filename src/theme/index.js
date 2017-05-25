@@ -3,6 +3,7 @@
  */
 const colors = {
   primary: '#1565c0',
+  secondary: '#e64a19',
   lightText: '#FAFAFA',
   background: '#e3f2fd',
 
