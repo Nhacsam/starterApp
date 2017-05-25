@@ -1,14 +1,25 @@
 // @flow
 import { takeLatest, put, all, race, take, select } from 'redux-saga/effects';
 import type { UserType } from 'modelDefinition';
+import Toast from 'react-native-root-toast';
 
-import { create, fetch as fetchUser, userSelector } from './Model/User';
+import { create, fetch as fetchUser, userSelector, update } from './Model/User';
 import type { UserModelActionType } from './Model/User';
+
+import I18n from 'lib/i18n';
 
 import { authUserIdSelector } from './Model/Auth';
 import { login } from './Auth';
 import { takeEveryPageEnter } from './Navigation';
+import { valueSelector } from './SingleInputForm';
 import type { StateType } from './reducers';
+
+const formNameAttributeMapping = {
+  userEmail: 'email',
+  userPassword: 'password',
+  userFirstName: 'firstName',
+  userLastName: 'lastName',
+};
 
 // ACTION CREATORS
 export const register = (user: UserType): UserActionType => ({
@@ -16,6 +27,7 @@ export const register = (user: UserType): UserActionType => ({
   payload: { user },
 });
 
+// TYPES
 export type UserStateType = {
   registering: boolean,
   registerFailure: boolean,
@@ -95,9 +107,32 @@ function* fetchCurrentUserSaga(): Generator<*, *, *> {
   yield put(fetchUser(userId));
 }
 
+function* updateUserSaga(action): Generator<*, *, *> {
+  const { name } = action.payload;
+  const attr = formNameAttributeMapping[name];
+  if (!attr) {
+    return;
+  }
+  const prevUser = yield select(currentUserSelector);
+  const value = yield select(valueSelector, name);
+  const user = {
+    ...prevUser,
+    [attr]: value,
+  };
+  yield put(update(user, true));
+  const result = yield race({
+    success: take('USER.UPDATE_SUCCESS'),
+    failure: take('USER.UPDATE_FAILURE'),
+  });
+  if (result.failure) {
+    Toast.show(I18n.t('user.update_failure'));
+  }
+}
+
 export function* userSaga(): Generator<*, *, *> {
   yield all([
     takeLatest('USER.REGISTER', sendRegisterSaga),
+    takeLatest('SINGLE_INPUT_FORM.CONFIRM', updateUserSaga),
     takeEveryPageEnter('account', fetchCurrentUserSaga),
   ]);
 }

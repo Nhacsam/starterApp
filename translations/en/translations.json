@@ -4,7 +4,7 @@
     "title": "Account"
   },
   "editAccount": {
-    "title": "Edit"
+    "title": "Edit Profile"
   },
   "home": {
     "text": "This is the home page !",
@@ -30,6 +30,7 @@
       "lastname": "Last name",
       "password": "Password"
     },
-    "registerFailure": "Register error"
+    "registerFailure": "Register error",
+    "update_failure": "Something wrong appened during the save"
   }
 }

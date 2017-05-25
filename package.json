@@ -16,6 +16,7 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-i18n": "^1.0.0",
+    "react-native-root-toast": "^1.1.2",
     "react-native-vector-icons": "^4.1.1",
     "react-navigation": "^1.0.0-beta.9",
     "react-redux": "^5.0.4",
@@ -47,7 +48,7 @@
       "<rootDir>/jest/setup.js"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation)"
+      "node_modules/(?!(jest-)?react-native|react-navigation|static-container)"
     ],
     "moduleNameMapper": {
       "^[./a-zA-Z0-9$_-]+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/jest/FileStub.js"

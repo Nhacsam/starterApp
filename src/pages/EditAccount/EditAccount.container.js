@@ -2,16 +2,15 @@
 import { connect } from 'react-redux';
 import EditAccount from './EditAccount';
 
-import { currentUserSelector } from 'starterApp/src/modules/User';
+import { currentUserSelector } from 'modules/User';
+import { startEdit } from 'modules/SingleInputForm';
 
 const mapStateToProps = state => ({
   user: currentUserSelector(state),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  edit: (name: string, inputType: string) => {
-    ownProps.navigation.navigate('singleInputForm');
-  },
-});
+const mapDispatchToProps = {
+  edit: startEdit,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditAccount);

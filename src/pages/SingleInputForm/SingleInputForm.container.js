@@ -1,18 +1,24 @@
 // @flow
 import { connect } from 'react-redux';
 import SingleInputForm from './SingleInputForm';
+import {
+  initialValueSelector,
+  inputTypeSelector,
+  updateValue,
+  confirm,
+} from 'modules/SingleInputForm';
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({});
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...stateProps,
-  ...dispatchProps,
-  ...ownProps,
-  send: () => {
-    ownProps.navigation.goBack();
-  },
+const mapStateToProps = (state, ownProps) => ({
+  initialValue: initialValueSelector(state, ownProps.navigation.state.params.name),
+  type: inputTypeSelector(state, ownProps.navigation.state.params.name),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(SingleInputForm);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const formName = ownProps.navigation.state.params.name;
+  return {
+    updateValue: value => dispatch(updateValue(formName, value)),
+    send: () => dispatch(confirm(formName)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleInputForm);

@@ -5,6 +5,7 @@ import { take, takeEvery } from 'redux-saga/effects';
 import { RootNavigator } from 'starterApp/src/Scenes';
 
 import type { NavigationState, NavigationAction } from 'react-navigation';
+import type { StateType } from './reducers';
 
 // ACTION CREATORS
 export const reset = (routeName: string) => {
@@ -35,6 +36,18 @@ export const navigationReducer = (
     }
   }
   return RootNavigator.router.getStateForAction(action, state);
+};
+
+// SELECTORS
+const localCurrentRouteSelector = (state: NavigationState) => {
+  if (!state.routes) {
+    return state.routeName;
+  }
+  return localCurrentRouteSelector(state.routes[state.index]);
+};
+
+export const currentRouteSelector = (state: StateType) => {
+  return localCurrentRouteSelector(state.nav);
 };
 
 // EFFECTS

@@ -65,3 +65,5 @@ export const signup = (user: UserType): Promise<UserType> => request('/Users', '
 export const login = (email: string, password: string): Promise<AuthType> =>
   request('/Users/login', 'POST', { email, password });
 export const getUser = (id: number): Promise<UserType> => request(`/Users/${id}`);
+export const updateUser = (user: UserType): Promise<UserType> =>
+  request(`/Users/${user.id}`, 'PATCH', user);

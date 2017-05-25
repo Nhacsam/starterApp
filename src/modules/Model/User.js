@@ -33,11 +33,39 @@ export const fetchFailure = (userId: number): UserModelActionType => ({
   payload: { userId },
 });
 
+export const update = (
+  user: UserCreateFormType,
+  notOptimistic: ?boolean = false
+): UserModelActionType => ({
+  type: 'USER.UPDATE',
+  payload: { user, notOptimistic },
+});
+export const updateSuccess = (user: UserType): UserModelActionType => ({
+  type: 'USER.UPDATE_SUCCESS',
+  payload: { user },
+});
+export const updateFailure = (user: UserCreateFormType): UserModelActionType => ({
+  type: 'USER.UPDATE_FAILURE',
+  payload: { user },
+});
+
 export type UserModelActionType =
   | {
-      type: 'USER.CREATE_SUCCESS' | 'USER.FETCH_SUCCESS',
+      type:
+        | 'USER.CREATE_SUCCESS'
+        | 'USER.FETCH_SUCCESS'
+        | 'USER.UPDATE'
+        | 'USER.UPDATE_SUCCESS'
+        | 'USER.UPDATE_FAILURE',
       payload: {
         user: UserType,
+      },
+    }
+  | {
+      type: 'USER.UPDATE',
+      payload: {
+        user: UserType,
+        notOptimistic: boolean,
       },
     }
   | {
@@ -65,34 +93,66 @@ export type UserModelStateType = {
   entities: {
     [number]: UserType,
   },
+  fallbacks: {
+    [number]: UserType,
+  },
 };
 
 const initialState: UserModelStateType = {
   allIds: [],
   entities: {},
+  fallbacks: {},
 };
+
+function updateEntities(state: { [number]: UserType }, user: UserType) {
+  return {
+    ...state,
+    [user.id]: {
+      ...state[user.id],
+      ...user,
+    },
+  };
+}
 
 // REDUCER
 export function userModelReducer(
   state: UserModelStateType = initialState,
   action: UserModelActionType
 ): UserModelStateType {
+  let user: UserType;
+
   switch (action.type) {
     case 'USER.CREATE_SUCCESS':
     case 'USER.FETCH_SUCCESS':
-      const { user } = action.payload;
-      if (!user.id) {
+    case 'USER.UPDATE_SUCCESS':
+      user = action.payload.user;
+      return {
+        ...state,
+        allIds: _.uniq([...state.allIds, user.id]),
+        entities: updateEntities(state.entities, user),
+      };
+    case 'USER.UPDATE':
+      user = action.payload.user;
+      if (action.payload.notOptimistic) {
         return state;
       }
 
       return {
+        ...state,
         allIds: _.uniq([...state.allIds, user.id]),
+        entities: updateEntities(state.entities, user),
+        fallbacks: {
+          ...state.fallbacks,
+          [user.id]: state.entities[user.id],
+        },
+      };
+    case 'USER.UPDATE_FAILURE':
+      user = action.payload.user;
+      return {
+        ...state,
         entities: {
           ...state.entities,
-          [user.id]: {
-            ...state.entities[user.id],
-            ...user,
-          },
+          [user.id]: state.fallbacks[user.id],
         },
       };
     default:
@@ -124,7 +184,20 @@ function* fetchSaga(action): Generator<*, *, *> {
   }
 }
 
+function* updateSaga(action): Generator<*, *, *> {
+  const { user } = action.payload;
+  try {
+    const updatedUser = yield call(api.updateUser, user);
+    yield put(updateSuccess(updatedUser));
+  } catch (e) {
+    yield put(updateFailure(user));
+  }
+}
+
 export function* userModelSaga(): Generator<*, *, *> {
-  yield all([takeLatest('USER.CREATE', createSaga)]);
-  yield all([takeLatest('USER.FETCH', fetchSaga)]);
+  yield all([
+    takeLatest('USER.CREATE', createSaga),
+    takeLatest('USER.UPDATE', updateSaga),
+    takeLatest('USER.FETCH', fetchSaga),
+  ]);
 }

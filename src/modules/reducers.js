@@ -7,6 +7,12 @@ import { userModelReducer, type UserModelStateType, type UserModelActionType } f
 import { authReducer, type AuthStateType, type AuthActionType } from './Auth';
 import { authModelReducer, type AuthModelStateType, type AuthModelActionType } from './Model/Auth';
 
+import {
+  singleInputReducer,
+  type SingleInputStateType,
+  type SingleInputActionsType,
+} from './SingleInputForm';
+
 import { navigationReducer } from './Navigation';
 
 import type { NavigationState, NavigationAction } from 'react-navigation';
@@ -15,6 +21,7 @@ export type StateType = {
   nav: NavigationState,
   user: UserStateType,
   auth: AuthStateType,
+  singleInputForm: SingleInputStateType,
   model: {
     auth: AuthModelStateType,
     user: UserModelStateType,
@@ -26,12 +33,14 @@ export type ActionType =
   | AuthActionType
   | AuthModelActionType
   | UserModelStateType
-  | UserModelActionType;
+  | UserModelActionType
+  | SingleInputActionsType;
 
 const appReducer = combineReducers({
   nav: navigationReducer,
   user: userReducer,
   auth: authReducer,
+  singleInputForm: singleInputReducer,
   model: combineReducers({
     auth: authModelReducer,
     user: userModelReducer,

@@ -19,25 +19,25 @@ class EditAccount extends Component {
     return (
       <Page>
         <ButtonCard
-          onPress={() => edit('email', 'email')}
+          onPress={() => edit('userEmail', user.email, 'email')}
           text={I18n.t('user.form.email')}
           canHaveValue
           value={user.email}
         />
         <ButtonCard
-          onPress={() => edit('password', 'password')}
+          onPress={() => edit('userPassword', '', 'password')}
           text={I18n.t('user.form.password')}
           canHaveValue
           value="******"
         />
         <ButtonCard
-          onPress={() => edit('firstName', 'text')}
+          onPress={() => edit('userFirstName', user.firstName, 'name')}
           text={I18n.t('user.form.firstname')}
           canHaveValue
           value={user.firstName}
         />
         <ButtonCard
-          onPress={() => edit('lastName', 'text')}
+          onPress={() => edit('userLastName', user.lastName, 'name')}
           text={I18n.t('user.form.lastname')}
           canHaveValue
           value={user.lastName}
@@ -49,7 +49,7 @@ class EditAccount extends Component {
 
 type PropTypes = {
   user: UserType,
-  edit: (name: string, inputType: string) => {},
+  edit: (name: string, initialValue: string, inputType: string) => {},
 };
 
 export default EditAccount;
