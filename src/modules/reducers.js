@@ -28,7 +28,6 @@ export type ActionType =
   | UserModelStateType
   | UserModelActionType;
 
-console.log(userModelReducer);
 const appReducer = combineReducers({
   nav: navigationReducer,
   user: userReducer,

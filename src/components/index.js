@@ -8,3 +8,4 @@ export { default as SecondaryFlatButton } from './SecondaryFlatButton';
 export { default as ProfileHeader } from './ProfileHeader';
 export { default as ButtonCard } from './ButtonCard';
 export { default as Touchable } from './Touchable';
+export { default as NavDoneButton } from './NavDoneButton';

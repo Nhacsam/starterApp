@@ -3,6 +3,9 @@
     "logout": "Logout",
     "title": "Account"
   },
+  "editAccount": {
+    "title": "Edit"
+  },
   "home": {
     "text": "This is the home page !",
     "title": "Home"

@@ -87,6 +87,19 @@ const DashboardStack = StackNavigator(
   {
     dashboardTabs: {
       screen: DashboardTab,
+      navigationOptions: ({ navigationOptions }) => ({
+        ...navigationOptions,
+        headerStyle: {
+          ...navigationOptions.headerStyle,
+          elevation: 0,
+        },
+      }),
+    },
+    editAccount: {
+      screen: Pages.EditAccount,
+    },
+    singleInputForm: {
+      screen: Pages.SingleInputForm,
     },
   },
   {
@@ -95,7 +108,6 @@ const DashboardStack = StackNavigator(
       headerTintColor: onAndroid(theme.colors.overPrimary),
       headerStyle: {
         backgroundColor: onAndroid(theme.colors.primary),
-        elevation: 0,
       },
     },
   }

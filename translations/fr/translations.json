@@ -3,6 +3,9 @@
     "logout": "Déconnexion",
     "title": "Mon compte"
   },
+  "editAccount": {
+    "title": "Edition du profil"
+  },
   "home": {
     "text": "Ceci est la page d'accueil",
     "title": "Accueil"

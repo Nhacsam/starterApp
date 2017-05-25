@@ -7,6 +7,5 @@ I18n.translations = translations;
 I18n.defaultLocale = 'en';
 
 I18n.has = key => I18n.locale in translations && key in translations[I18n.locale];
-console.log(I18n.locale);
 
 export default I18n;

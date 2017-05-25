@@ -7,7 +7,7 @@ import type { UserModelActionType } from './Model/User';
 
 import { authUserIdSelector } from './Model/Auth';
 import { login } from './Auth';
-import { reset, takeEveryPageEnter } from './Navigation';
+import { takeEveryPageEnter } from './Navigation';
 import type { StateType } from './reducers';
 
 // ACTION CREATORS
