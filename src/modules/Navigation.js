@@ -18,15 +18,18 @@ export const reset = (routeName: string) => {
   return resetAction;
 };
 
+// getPathAndParamsForState
 // REDUCER
 export const navigationReducer = (
   state: NavigationState,
   action: NavigationAction
 ): NavigationState => {
+  const router = RootNavigator.router;
+  const nextState = router.getStateForAction(action, state);
   if (action.type === 'Navigation/NAVIGATE') {
-    const { type, routeName } = action;
-    const lastRoute = state.routes[state.routes.length - 1];
-    if (type === lastRoute.type && routeName === lastRoute.routeName) {
+    const currentPath = router.getPathAndParamsForState(state).path;
+    const nextPath = router.getPathAndParamsForState(nextState).path;
+    if (currentPath == nextPath) {
       console.warn(
         'You press the navigation button two times, pushing two times to the same route.\n\n' +
           'The last dispatch was canceled. \n\n' +
@@ -35,33 +38,50 @@ export const navigationReducer = (
       return state || {};
     }
   }
-  return RootNavigator.router.getStateForAction(action, state);
+  return nextState;
 };
 
-// SELECTORS
-const localCurrentRouteSelector = (state: NavigationState) => {
-  if (!state.routes) {
-    return state.routeName;
+const pathChanged = (path: string) => ({
+  type: 'CustomNavigation/PATH_CHANGED',
+  payload: {
+    path,
+  },
+});
+
+type CustomNavigationAction =
+  | NavigationAction
+  | {
+      type: 'CustomNavigation/PATH_CHANGED',
+      payload: {
+        path: string,
+      },
+    };
+
+export const pageChangedEmitterMiddleware = (store: any) => (next: Function) => (
+  action: CustomNavigationAction
+) => {
+  if (!action.type.startsWith('Navigation/')) {
+    return next(action);
   }
-  return localCurrentRouteSelector(state.routes[state.index]);
-};
+  const prevState = store.getState();
+  const prevPath = RootNavigator.router.getPathAndParamsForState(prevState.nav).path;
 
-export const currentRouteSelector = (state: StateType) => {
-  return localCurrentRouteSelector(state.nav);
-};
+  const result = next(action);
 
-// EFFECTS
-const generateActionPageEnterMatcherFunction = (routeName: string) => (
-  action: NavigationAction
-): boolean => {
-  if (action.type !== 'Navigation/NAVIGATE') {
-    return false;
+  const nextState = store.getState();
+  const nextPath = RootNavigator.router.getPathAndParamsForState(nextState.nav).path;
+
+  if (nextPath !== prevPath) {
+    setTimeout(() => {
+      store.dispatch(pathChanged(nextPath));
+    });
   }
-  return action.routeName === routeName;
+
+  return result;
 };
 
-export const takePageEnter = (routeName: string) =>
-  take(generateActionPageEnterMatcherFunction(routeName));
-
-export const takeEveryPageEnter = (routeName: string, saga: Function, ...args: *) =>
-  takeEvery(generateActionPageEnterMatcherFunction(routeName), saga, ...args);
+export const takeEveryPathEnter = (path: string, saga: Function, ...args: *) => {
+  const pathChangedMatcher = action =>
+    action.type === 'CustomNavigation/PATH_CHANGED' && path === action.payload.path;
+  return takeEvery(pathChangedMatcher, saga, ...args);
+};

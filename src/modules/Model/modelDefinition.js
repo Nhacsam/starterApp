@@ -2,6 +2,7 @@
  * @flow
  * @providesModule modelDefinition
  */
+import { schema } from 'normalizr';
 
 export type UserType = {
   id: number,
@@ -17,3 +18,20 @@ export type AuthType = {
   created: string,
   userId: number,
 };
+
+export type TvShowType = {
+  id: number,
+};
+
+export type NormalizedEntitiesType = {
+  tvShows?: {
+    [number]: TvShowType,
+  },
+};
+
+export type NormalizedResultType = {
+  result: any,
+  entities: NormalizedEntitiesType,
+};
+
+export const tvShowSchema = new schema.Entity('tvShows', {});

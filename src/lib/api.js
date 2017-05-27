@@ -67,3 +67,5 @@ export const login = (email: string, password: string): Promise<AuthType> =>
 export const getUser = (id: number): Promise<UserType> => request(`/Users/${id}`);
 export const updateUser = (user: UserType): Promise<UserType> =>
   request(`/Users/${user.id}`, 'PATCH', user);
+
+export const getTvShows = (): Promise<any> => request(`/TvShows`);

@@ -10,7 +10,7 @@ import I18n from 'lib/i18n';
 
 import { authUserIdSelector } from './Model/Auth';
 import { login } from './Auth';
-import { takeEveryPageEnter } from './Navigation';
+import { takeEveryPathEnter } from './Navigation';
 import { valueSelector } from './SingleInputForm';
 import type { StateType } from './reducers';
 
@@ -133,6 +133,6 @@ export function* userSaga(): Generator<*, *, *> {
   yield all([
     takeLatest('USER.REGISTER', sendRegisterSaga),
     takeLatest('SINGLE_INPUT_FORM.CONFIRM', updateUserSaga),
-    takeEveryPageEnter('account', fetchCurrentUserSaga),
+    takeEveryPathEnter('dashboard/dashboardTabs/account', fetchCurrentUserSaga),
   ]);
 }
