@@ -9,3 +9,4 @@ export { default as ProfileHeader } from './ProfileHeader';
 export { default as ButtonCard } from './ButtonCard';
 export { default as Touchable } from './Touchable';
 export { default as NavDoneButton } from './NavDoneButton';
+export { default as LoadingPage } from './LoadingPage';

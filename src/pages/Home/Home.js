@@ -5,7 +5,7 @@ import { Text, FlatList } from 'react-native';
 import type { TvShowType } from 'modelDefinition';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page } from 'starterApp/src/components';
+import { Page, LoadingPage } from 'components';
 import I18n from 'lib/i18n';
 
 type Props = {
@@ -22,16 +22,22 @@ class Home extends Component<void, Props, void> {
   };
 
   render() {
+    const { fetching, refreshing, tvShows } = this.props;
+
+    if (fetching && !refreshing && !tvShows.length) {
+      return <LoadingPage />;
+    }
+
     return (
       <Page>
         <FlatList
           style={{ flex: 1 }}
-          data={this.props.tvShows}
+          data={tvShows}
           renderItem={({ item }) => <Text>{item.name}</Text>}
           initialNumToRender={10}
           keyExtractor={tvShow => tvShow.id}
           onRefresh={this.props.refresh}
-          refreshing={this.props.refreshing}
+          refreshing={refreshing}
         />
       </Page>
     );
