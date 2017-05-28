@@ -5,7 +5,7 @@ const colors = {
   primary: '#1565c0',
   secondary: '#e64a19',
   lightText: '#FAFAFA',
-  background: '#e3f2fd',
+  background: '#eeeeee',
 
   darkGray: '#333333',
   gray: '#777777',
@@ -51,6 +51,13 @@ export default {
     error: {
       color: colors.error,
       fontSize: 13,
+    },
+    normalText: {
+      fontSize: 13,
+    },
+    cardName: {
+      fontSize: 18,
+      fontWeight: '700',
     },
   },
   defaultPadding: 32,

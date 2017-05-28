@@ -5,8 +5,9 @@ import { Text, FlatList } from 'react-native';
 import type { TvShowType } from 'modelDefinition';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page, LoadingPage } from 'components';
+import { Page, LoadingPage, TvShowListItem } from 'components';
 import I18n from 'lib/i18n';
+import theme from 'theme';
 
 type Props = {
   navigation: any,
@@ -14,6 +15,7 @@ type Props = {
   refresh: () => {},
   refreshing: boolean,
   fetching: boolean,
+  onSelect: (id: number) => {},
 };
 
 class Home extends Component<void, Props, void> {
@@ -29,12 +31,14 @@ class Home extends Component<void, Props, void> {
     }
 
     return (
-      <Page>
+      <Page noPadding>
         <FlatList
           style={{ flex: 1 }}
           data={tvShows}
-          renderItem={({ item }) => <Text>{item.name}</Text>}
-          initialNumToRender={10}
+          renderItem={({ item }) => (
+            <TvShowListItem tvShow={item} onPress={() => this.props.onSelect(item.id)} />
+          )}
+          initialNumToRender={4}
           keyExtractor={tvShow => tvShow.id}
           onRefresh={this.props.refresh}
           refreshing={refreshing}

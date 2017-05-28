@@ -6,6 +6,7 @@ import { authSaga } from './Auth';
 import { authModelSaga } from './Model/Auth';
 import { tvShowModelSaga } from './Model/TvShow';
 import { saga as tvShowMainListSaga } from './TvShowMainList';
+import { saga as tvShowDetailSaga } from './TvShowDetail';
 import { singleInputFormSaga } from './SingleInputForm';
 
 export default function* rootSaga(): Generator<*, *, *> {
@@ -17,5 +18,6 @@ export default function* rootSaga(): Generator<*, *, *> {
     fork(singleInputFormSaga),
     fork(tvShowModelSaga),
     fork(tvShowMainListSaga),
+    fork(tvShowDetailSaga),
   ]);
 }

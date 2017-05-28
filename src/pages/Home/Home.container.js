@@ -8,6 +8,7 @@ import {
   refreshingSelector,
   refresh,
 } from 'modules/TvShowMainList';
+import { showDetail } from 'modules/TvShowDetail';
 
 const mapStateToProps = state => ({
   tvShows: tvShowsSelector(state),
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   refresh,
+  onSelect: showDetail,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

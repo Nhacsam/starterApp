@@ -5,3 +5,4 @@ export { default as Login } from './Login';
 export { default as Signup } from './Signup';
 export { default as EditAccount } from './EditAccount';
 export { default as SingleInputForm } from './SingleInputForm';
+export { default as TvShowDetail } from './TvShowDetail';

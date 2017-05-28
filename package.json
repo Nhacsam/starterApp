@@ -9,13 +9,16 @@
     "test:lint": "eslint . --quiet",
     "test:flow": "flow",
     "test:flow:start": "flow start",
-    "test:flow:check": "flow check"
+    "test:flow:check": "flow check",
+    "storybook": "storybook start -p 7007"
   },
   "dependencies": {
     "normalizr": "^3.2.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-animatable": "^1.2.0",
     "react-native-i18n": "^1.0.0",
+    "react-native-image-header-scroll-view": "^0.5.1",
     "react-native-root-toast": "^1.1.2",
     "react-native-vector-icons": "^4.1.1",
     "react-navigation": "^1.0.0-beta.9",
@@ -24,6 +27,7 @@
     "redux-saga": "^0.15.3"
   },
   "devDependencies": {
+    "@kadira/react-native-storybook": "^2.0.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "19.0.0",

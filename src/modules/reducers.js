@@ -19,6 +19,12 @@ import {
 } from './TvShowMainList';
 
 import {
+  reducer as tvShowDetailReducer,
+  type StateType as TvShowDetailStateType,
+  type ActionType as TvShowDetailActionType,
+} from './TvShowDetail';
+
+import {
   singleInputReducer,
   type SingleInputStateType,
   type SingleInputActionsType,
@@ -34,6 +40,7 @@ export type StateType = {
   auth: AuthStateType,
   singleInputForm: SingleInputStateType,
   tvShowMainList: TvShowMainListStateType,
+  tvShowDetail: TvShowDetailStateType,
   model: {
     auth: AuthModelStateType,
     user: UserModelStateType,
@@ -49,6 +56,7 @@ export type ActionType =
   | UserModelActionType
   | TvShowModelActionType
   | TvShowMainListActionType
+  | TvShowDetailActionType
   | SingleInputActionsType;
 
 const appReducer = combineReducers({
@@ -57,6 +65,7 @@ const appReducer = combineReducers({
   auth: authReducer,
   singleInputForm: singleInputReducer,
   tvShowMainList: tvShowMainListReducer,
+  tvShowDetail: tvShowDetailReducer,
   model: combineReducers({
     auth: authModelReducer,
     user: userModelReducer,

@@ -17,18 +17,22 @@ export type TvShowModelActionType =
       payload: {},
     }
   | {
-      type: 'TV_SHOW.FETCH_LIST_SUCCESS',
+      type: 'TV_SHOW.FETCH',
+      payload: { id: number },
+    }
+  | {
+      type: 'TV_SHOW.FETCH_LIST_SUCCESS' | 'TV_SHOW.FETCH_SUCCESS',
       payload: {
         result: any,
       },
       entities: NormalizedEntitiesType,
     }
   | {
-      type: 'TV_SHOW.FETCH_LIST_FAILURE',
+      type: 'TV_SHOW.FETCH_LIST_FAILURE' | 'TV_SHOW.FETCH_FAILURE',
       payload: {},
     };
 
-export type EntityStatusType = 'fetching' | 'fetched' | 'error' | 'refreshing' | 'saving';
+export type EntityStatusType = 'fetching' | 'fetched' | 'error' | 'saving';
 export type TvShowModelStateType = {
   entities: {
     [number]: TvShowType,
@@ -53,6 +57,20 @@ export const fetchListFailure = (): TvShowModelActionType => ({
   payload: {},
 });
 
+export const fetch = (id: number): TvShowModelActionType => ({
+  type: 'TV_SHOW.FETCH',
+  payload: { id },
+});
+export const fetchSuccess = (result: NormalizedResultType): TvShowModelActionType => ({
+  type: 'TV_SHOW.FETCH_SUCCESS',
+  entities: result.entities,
+  payload: { result: result.result },
+});
+export const fetchFailure = (): TvShowModelActionType => ({
+  type: 'TV_SHOW.FETCH_FAILURE',
+  payload: {},
+});
+
 // REDUCER
 const initialState = {
   entities: {},
@@ -64,6 +82,14 @@ export function tvShowModelReducer(
   action: TvShowModelActionType
 ): TvShowModelStateType {
   switch (action.type) {
+    case 'TV_SHOW.FETCH':
+      return {
+        ...state,
+        status: {
+          ...state.status,
+          [action.payload.id]: 'fetching',
+        },
+      };
     default:
       if (!action.entities || !action.entities.tvShows) {
         return state;
@@ -120,6 +146,16 @@ function* fetchListSaga(action): Generator<*, *, *> {
   }
 }
 
+function* fetchSaga(action): Generator<*, *, *> {
+  try {
+    const response = yield call(api.getTvShow, action.payload.id);
+    yield put(fetchSuccess(normalize(response, tvShowSchema)));
+  } catch (e) {
+    yield put(fetchFailure());
+  }
+}
+
 export function* tvShowModelSaga(): Generator<*, *, *> {
   yield all([takeLatest('TV_SHOW.FETCH_LIST', fetchListSaga)]);
+  yield all([takeLatest('TV_SHOW.FETCH', fetchSaga)]);
 }

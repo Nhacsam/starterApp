@@ -69,3 +69,4 @@ export const updateUser = (user: UserType): Promise<UserType> =>
   request(`/Users/${user.id}`, 'PATCH', user);
 
 export const getTvShows = (): Promise<any> => request(`/TvShows`);
+export const getTvShow = (id: number): Promise<any> => request(`/TvShows/${id}`);

@@ -16,7 +16,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Page noPadding noNavBar>
+      <Page noPadding>
         <ProfileHeader
           user={this.props.currentUser}
           onPress={() => this.props.navigation.navigate('editAccount')}

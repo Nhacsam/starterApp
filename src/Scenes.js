@@ -6,6 +6,7 @@ import {
   StackNavigator,
   TabNavigator,
   HeaderBackButton,
+  Header,
 } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -101,13 +102,22 @@ const DashboardStack = StackNavigator(
     singleInputForm: {
       screen: Pages.SingleInputForm,
     },
+    tvShowDetail: {
+      screen: Pages.TvShowDetail,
+    },
   },
   {
     initialRouteName: 'dashboardTabs',
+    cardStyle: { marginTop: Header.HEIGHT },
     navigationOptions: {
       headerTintColor: onAndroid(theme.colors.overPrimary),
       headerStyle: {
         backgroundColor: onAndroid(theme.colors.primary),
+        position: 'absolute',
+        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0,
       },
     },
   }

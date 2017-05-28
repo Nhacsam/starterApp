@@ -11,7 +11,6 @@ class Page extends Component {
       style: [
         styles.page,
         {
-          paddingTop: this.props.noNavBar ? 0 : 11,
           paddingHorizontal: this.props.noPadding ? 0 : Page.DEFAULT_PADDING,
           backgroundColor: this.props.backgroundColor,
           width: Dimensions.get('window').width,
@@ -40,7 +39,6 @@ const styles = StyleSheet.create({
 type PropTypes = {
   children: React.Element<*>,
   noPadding: boolean,
-  noNavBar: boolean,
   backgroundColor: string,
   style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
   backgroundImage?: any,
@@ -49,7 +47,6 @@ type PropTypes = {
 Page.defaultProps = {
   children: null,
   noPadding: false,
-  noNavBar: false,
   backgroundColor: theme.colors.background,
 };
 
