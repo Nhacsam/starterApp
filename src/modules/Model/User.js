@@ -39,6 +39,17 @@ export const update = (
 ): UserModelActionType => ({
   type: 'USER.UPDATE',
   payload: { user, notOptimistic },
+  meta: {
+    offline: {
+      // the network action to execute:
+      effect: { method: 'updateUser', params: [user] },
+      //effect: { url: '/api/follow', method: 'POST', body: { user } },
+      // action to dispatch when effect succeeds:
+      commit: { type: 'USER.UPDATE_SUCCESS', payload: { user } },
+      // action to dispatch if network action fails permanently:
+      rollback: { type: 'USER.UPDATE_FAILURE', payload: { user } },
+    },
+  },
 });
 export const updateSuccess = (user: UserType): UserModelActionType => ({
   type: 'USER.UPDATE_SUCCESS',
@@ -125,7 +136,7 @@ export function userModelReducer(
     case 'USER.CREATE_SUCCESS':
     case 'USER.FETCH_SUCCESS':
     case 'USER.UPDATE_SUCCESS':
-      user = action.payload.user;
+      user = action.payload.user ? action.payload.user : action.payload;
       return {
         ...state,
         allIds: _.uniq([...state.allIds, user.id]),
@@ -195,9 +206,5 @@ function* updateSaga(action): Generator<*, *, *> {
 }
 
 export function* userModelSaga(): Generator<*, *, *> {
-  yield all([
-    takeLatest('USER.CREATE', createSaga),
-    takeLatest('USER.UPDATE', updateSaga),
-    takeLatest('USER.FETCH', fetchSaga),
-  ]);
+  yield all([takeLatest('USER.CREATE', createSaga), takeLatest('USER.FETCH', fetchSaga)]);
 }

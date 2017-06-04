@@ -136,7 +136,7 @@ export const RootNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: 'landing',
+    initialRouteName: 'dashboard',
     headerMode: 'none',
   }
 );
