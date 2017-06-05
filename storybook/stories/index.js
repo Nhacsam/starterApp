@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { storiesOf, action, linkTo } from '@kadira/react-native-storybook';
+import { storiesOf } from '@kadira/react-native-storybook';
 
 import { ListItem } from 'components';
 storiesOf('ListItem', module)

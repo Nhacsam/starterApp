@@ -4,19 +4,16 @@ import { Text, View, StyleSheet, Image, Dimensions } from 'react-native';
 import { Header } from 'react-navigation';
 
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
-import * as Animatable from 'react-native-animatable';
 
 import type { TvShowType } from 'modelDefinition';
 
-import type { NavigationScreenConfig, NavigationScreenProp } from 'react-navigation';
-import { Page, LoadingPage, TvShowListItem } from 'components';
-import I18n from 'lib/i18n';
+import type { NavigationScreenConfig } from 'react-navigation';
+import { Page } from 'components';
 import theme from 'theme';
 
 type Props = {
   navigation: any,
   tvShow: TvShowType,
-  fetching: boolean,
 };
 
 const MIN_HEIGHT = Header.HEIGHT;
@@ -50,7 +47,7 @@ class TvShowDetail extends Component<void, Props, void> {
   }
 
   render() {
-    const { fetching, tvShow } = this.props;
+    const { tvShow } = this.props;
     const image = { uri: `https://image.tmdb.org/t/p/w500/${tvShow.poster_path}` };
 
     return (

@@ -1,5 +1,5 @@
 // @flow
-import { takeLatest, put, all, race, take } from 'redux-saga/effects';
+import { takeLatest, put, all } from 'redux-saga/effects';
 
 import { fetch, entitySelector } from './Model/TvShow';
 import { NavigationActions } from 'react-navigation';

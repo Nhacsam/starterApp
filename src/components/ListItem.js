@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import HeartIcon from './HeartIcon';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from 'starterApp/src/theme';
 
 type Props = {

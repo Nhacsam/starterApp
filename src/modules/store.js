@@ -33,6 +33,7 @@ export default (callback: Function): Store => {
   };
   const enhancers = [applyMiddleware(...middlewares), autoRehydrate()];
   const store = offline(offlineConfig)(createStore)(reducers, composeEnhancers(...enhancers));
+
   sagaMiddleware.run(rootSaga);
   setStore(store);
 

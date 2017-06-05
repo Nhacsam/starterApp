@@ -1,11 +1,10 @@
 // @flow
 import { NavigationActions } from 'react-navigation';
-import { take, takeEvery } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 
 import { RootNavigator } from 'starterApp/src/Scenes';
 
 import type { NavigationState, NavigationAction } from 'react-navigation';
-import type { StateType } from './reducers';
 
 // ACTION CREATORS
 export const reset = (routeName: string) => {

@@ -195,16 +195,6 @@ function* fetchSaga(action): Generator<*, *, *> {
   }
 }
 
-function* updateSaga(action): Generator<*, *, *> {
-  const { user } = action.payload;
-  try {
-    const updatedUser = yield call(api.updateUser, user);
-    yield put(updateSuccess(updatedUser));
-  } catch (e) {
-    yield put(updateFailure(user));
-  }
-}
-
 export function* userModelSaga(): Generator<*, *, *> {
   yield all([takeLatest('USER.CREATE', createSaga), takeLatest('USER.FETCH', fetchSaga)]);
 }

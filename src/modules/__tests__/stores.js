@@ -9,7 +9,7 @@ describe('stores', () => {
     const action = { type: '@@INIT' };
     reducersExport.default = jest.fn();
     createStore(store => store.dispatch(action));
-    expect(reducersExport.default).toHaveBeenCalledWith(undefined, action);
+    expect(reducersExport.default).toHaveBeenCalledWith({}, action);
     reducersExport.default.mockRestore();
   });
 

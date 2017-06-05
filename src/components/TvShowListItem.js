@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import type { TvShowType } from 'modelDefinition';
 

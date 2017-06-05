@@ -5,3 +5,10 @@ jest.mock('Linking', () => ({
   canOpenURL: jest.genMockFn().mockReturnValue(Promise.resolve()),
   getInitialURL: jest.genMockFn().mockReturnValue(Promise.resolve()),
 }));
+
+jest.mock('NetInfo', () => ({
+  isConnected: {
+    addEventListener: jest.genMockFn(),
+    fetch: jest.genMockFn().mockReturnValue(Promise.resolve()),
+  },
+}));
