@@ -11,36 +11,51 @@ import {
   inputTypeSelector,
   valueSelector,
   singleInputReducer,
+  singleInputFormSaga,
 } from '../SingleInputForm';
 import { RootNavigator } from 'starterApp/src/Scenes';
-import createStore from '../store';
+
+import { expectSaga } from 'redux-saga-test-plan';
+
+import reducers from '../reducers';
 
 describe('SingleInputForm module', () => {
   describe('Integration tests', () => {
-    let store;
-    let originalTimeout;
-    beforeEach(() => {
-      createStore(newStore => (store = newStore));
-      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 200;
-    });
-    afterEach(() => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    let prevState;
+
+    it('should redirect on the SingleInputForm page', () => {
+      const email = 'myemail@j.fr';
+      return expectSaga(singleInputFormSaga)
+        .withReducer(reducers)
+        .dispatch(startEdit('email', email, 'email'))
+        .silentRun(1)
+        .then(result => {
+          const state = result.storeState;
+          const { path, params } = RootNavigator.router.getPathAndParamsForState(state.nav);
+          expect(path).toBe('dashboard/singleInputForm');
+          expect(initialValueSelector(state, params.name)).toBe(email);
+          expect(inputTypeSelector(state, params.name)).toBe('email');
+          expect(valueSelector(state, 'email')).toBe(email);
+          prevState = state;
+        });
     });
 
-    it('should redirect on the SingleInputForm page', done => {
-      const email = 'bruce@wayne.com';
-      store.subscribe(() => {
-        const state = store.getState();
-        const { path, params } = RootNavigator.router.getPathAndParamsForState(state.nav);
-        if (path !== 'dashboard/singleInputForm') return;
+    it('should change the value', () => {
+      const email = 'newEmail@domain.com';
+      prevState = reducers(prevState, updateValue('email', email));
+      expect(valueSelector(prevState, 'email')).toBe(email);
+    });
 
-        expect(initialValueSelector(state, params.name)).toBe(email);
-        expect(inputTypeSelector(state, params.name)).toBe('email');
-        done();
-      });
-      store.dispatch({ type: '@INIT' });
-      store.dispatch(startEdit('email', email, 'email'));
+    it('should go back on confirm', () => {
+      return expectSaga(singleInputFormSaga)
+        .withReducer(reducers, prevState)
+        .dispatch(confirm('email'))
+        .silentRun(1)
+        .then(result => {
+          const state = result.storeState;
+          const { path } = RootNavigator.router.getPathAndParamsForState(state.nav);
+          expect(path).not.toBe('dashboard/singleInputForm');
+        });
     });
   });
 
