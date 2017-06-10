@@ -15,6 +15,8 @@ const colors = {
 
   inputBackground: 'white',
 
+  darkenPrimary: '#283593',
+
   overPrimary: 'white',
   error: '#FF4444',
 };

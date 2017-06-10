@@ -12,4 +12,3 @@ export { default as NavDoneButton } from './NavDoneButton';
 export { default as LoadingPage } from './LoadingPage';
 export { default as ListItem } from './ListItem';
 export { default as TvShowListItem } from './TvShowListItem';
-export { default as SearchHeader } from './SearchHeader';

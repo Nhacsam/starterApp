@@ -5,7 +5,8 @@ import { FlatList } from 'react-native';
 import type { TvShowType } from 'modelDefinition';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page, LoadingPage, TvShowListItem, SearchHeader } from 'components';
+import { Page, LoadingPage, TvShowListItem } from 'components';
+import searchHeaderNavigationConfig from 'starterApp/src/components/searchHeaderNavigationConfig';
 import I18n from 'lib/i18n';
 
 type Props = {
@@ -18,10 +19,7 @@ type Props = {
 };
 
 class Home extends Component<void, Props, void> {
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('home.title'),
-    header: props => <SearchHeader {...props} />,
-  };
+  static navigationOptions: NavigationTabScreenOptions = searchHeaderNavigationConfig;
 
   render() {
     const { fetching, refreshing, tvShows } = this.props;

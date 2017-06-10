@@ -72,6 +72,7 @@ const DashboardTab = TabNavigator(
     home: {
       screen: Pages.Home,
       navigationOptions: {
+        title: I18n.t('home.title'),
         tabBarIcon: props => <TabIcon name="home" {...props} />,
       },
     },
