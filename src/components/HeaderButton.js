@@ -40,7 +40,6 @@ class NavDoneButton extends PureComponent<DefaultProps, Props, void> {
       headerTitleStyle,
       headerTintColor,
     } = this.props;
-    console.log(this.props);
 
     return (
       <Touchable

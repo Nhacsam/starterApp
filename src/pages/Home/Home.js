@@ -21,6 +21,14 @@ type Props = {
 class Home extends Component<void, Props, void> {
   static navigationOptions: NavigationTabScreenOptions = searchHeaderNavigationConfig;
 
+  componentWillMount() {
+    this.props.navigation.setParams({
+      onSearchTextChange: text => {
+        console.log('search', text);
+      },
+    });
+  }
+
   render() {
     const { fetching, refreshing, tvShows } = this.props;
 

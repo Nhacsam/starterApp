@@ -19,6 +19,10 @@ const navigationOptions: NavigationScreenConfig = ({ navigation, navigationOptio
           ref={ref => (input = ref)}
           underlineColorAndroid="transparent"
           style={styles.input}
+          onChangeText={text =>
+            state.params &&
+            state.params.onSearchTextChange &&
+            state.params.onSearchTextChange(text)}
         />
       </View>
     ),
