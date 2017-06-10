@@ -2,9 +2,10 @@
  * @providesModule theme
  */
 const colors = {
-  primary: '#1565c0',
+  primary: '#3f51b5',
+  secondary: '#e64a19',
   lightText: '#FAFAFA',
-  background: '#e3f2fd',
+  background: '#eeeeee',
 
   darkGray: '#333333',
   gray: '#777777',
@@ -23,6 +24,7 @@ export default {
   images: {
     landing: require('./images/landing.jpg'),
     logo: require('./images/logo.png'),
+    defaultUserImage: require('./images/default-user-image.png'),
   },
   fonts: {
     pageTitle: {

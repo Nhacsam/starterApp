@@ -1,13 +1,16 @@
 // @flow
 import React, { Component } from 'react';
 import { StyleSheet, View, Image, Text, ActivityIndicator } from 'react-native';
-import type { UserType } from 'modelDefinition';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Page } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 
-class ProfileHeader extends Component {
+type Props = {
+  user: ?Object,
+};
+
+class ProfileHeader extends Component<void, Props, void> {
   render() {
     const { user } = this.props;
 
@@ -23,9 +26,10 @@ class ProfileHeader extends Component {
         </View>
         {user &&
           <View>
-            <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
+            <Text style={styles.name}>
+              {user.firstName} {user.lastName}
+            </Text>
           </View>}
-
       </View>
     );
   }
@@ -66,8 +70,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-type PropTypes = {
-  user: ?UserType,
-};
-
 export default ProfileHeader;

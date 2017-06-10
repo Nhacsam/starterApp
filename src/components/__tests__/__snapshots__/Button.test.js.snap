@@ -32,7 +32,7 @@ exports[`Button should render the button 1`] = `
       Array [
         Object {
           "alignSelf": "stretch",
-          "backgroundColor": "#05A5D1",
+          "backgroundColor": "#3f51b5",
           "borderRadius": 5,
           "height": 40,
           "justifyContent": "center",
@@ -50,7 +50,7 @@ exports[`Button should render the button 1`] = `
         Array [
           Object {
             "color": "white",
-            "fontSize": 13,
+            "fontSize": 14,
             "fontWeight": "700",
             "textAlign": "center",
           },

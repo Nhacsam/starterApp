@@ -9,7 +9,8 @@
     "test:lint": "eslint . --quiet",
     "test:flow": "flow",
     "test:flow:start": "flow start",
-    "test:flow:check": "flow check"
+    "test:flow:check": "flow check",
+    "prettify": "prettier --stdin --trailing-comma es5 --single-quote --print-width 100 src/**/*.js" 
   },
   "dependencies": {
     "react": "16.0.0-alpha.6",
