@@ -2,7 +2,7 @@
  * @providesModule theme
  */
 const colors = {
-  primary: '#1565c0',
+  primary: '#3f51b5',
   secondary: '#e64a19',
   lightText: '#FAFAFA',
   background: '#eeeeee',

@@ -19,6 +19,7 @@ class TvShowListItem extends PureComponent<void, Props, void> {
     const show = this.props.tvShow;
     return (
       <Touchable
+        delayPressIn={200}
         style={styles.container}
         useForeground
         onPress={this.props.onPress}

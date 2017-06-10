@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, BackHandler } from 'react-native';
 import {
   addNavigationHelpers,
   StackNavigator,
   TabNavigator,
   HeaderBackButton,
   Header,
+  NavigationActions,
 } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -14,8 +15,11 @@ import type { NavigationScreenProp } from 'react-navigation';
 
 import * as Pages from './pages';
 import theme from './theme';
+import I18n from 'starterApp/src/lib/i18n';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const onAndroid = options => (Platform.OS === 'ios' ? undefined : options);
+const TabIcon = props => <Icon color={props.tintColor} size={30} {...props} />;
 
 const LandingStack = StackNavigator(
   {
@@ -46,7 +50,7 @@ const SignUpStack = StackNavigator(
             onPress={() => {
               props.navigation.goBack(null);
             }}
-            tintColor={onAndroid(theme.colors.overPrimary)}
+            tintColor={theme.colors.overPrimary}
           />
         ),
       }),
@@ -55,9 +59,9 @@ const SignUpStack = StackNavigator(
   {
     initialRouteName: 'signup',
     navigationOptions: {
-      headerTintColor: onAndroid(theme.colors.overPrimary),
+      headerTintColor: theme.colors.overPrimary,
       headerStyle: {
-        backgroundColor: onAndroid(theme.colors.primary),
+        backgroundColor: theme.colors.primary,
       },
     },
   }
@@ -67,19 +71,33 @@ const DashboardTab = TabNavigator(
   {
     home: {
       screen: Pages.Home,
+      navigationOptions: {
+        tabBarIcon: props => <TabIcon name="home" {...props} />,
+      },
     },
     account: {
       screen: Pages.Account,
+      navigationOptions: {
+        title: I18n.t('account.title'),
+        tabBarIcon: props => <TabIcon name="account" {...props} />,
+      },
     },
   },
   {
     initialRouteName: 'home',
     animationEnabled: true,
+    backBehavior: 'initialRoute',
     tabBarOptions: {
-      showIcon: false,
-      style: onAndroid({
+      activeTintColor: theme.colors.primary,
+      pressColor: theme.colors.grayLight,
+      inactiveTintColor: theme.colors.gray,
+      indicatorStyle: {
         backgroundColor: theme.colors.primary,
-      }),
+        height: 3,
+      },
+      style: {
+        backgroundColor: 'white',
+      },
     },
   }
 );
@@ -108,16 +126,10 @@ const DashboardStack = StackNavigator(
   },
   {
     initialRouteName: 'dashboardTabs',
-    cardStyle: { marginTop: Header.HEIGHT },
     navigationOptions: {
-      headerTintColor: onAndroid(theme.colors.overPrimary),
+      headerTintColor: theme.colors.overPrimary,
       headerStyle: {
-        backgroundColor: onAndroid(theme.colors.primary),
-        position: 'absolute',
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        right: 0,
+        backgroundColor: theme.colors.primary,
       },
     },
   }
@@ -141,9 +153,40 @@ export const RootNavigator = StackNavigator(
   }
 );
 
+function isRootScreen(navigator) {
+  if (navigator.index == null) {
+    return true;
+  }
+
+  if (navigator.index > 0) {
+    return false;
+  }
+
+  return !navigator.routes || !navigator.routes.find(route => !isRootScreen(route));
+}
+
 class Scenes extends Component {
   props: PropsType;
+  backAndroid: *;
   navigation: NavigationScreenProp;
+
+  componentDidMount() {
+    this.backAndroid = BackHandler.addEventListener('hardwareBackPress', () =>
+      this.handleBackPress()
+    );
+  }
+
+  componentWillUnmount() {
+    this.backAndroid && this.backAndroid.remove();
+  }
+
+  handleBackPress() {
+    if (isRootScreen(this.props.nav)) return false;
+
+    this.props.dispatch(NavigationActions.back(null));
+
+    return true;
+  }
 
   get navigation() {
     return addNavigationHelpers({

@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 
-import type { NavigationTabScreenOptions } from 'react-navigation';
 import type { UserType } from 'modelDefinition';
 
 import { Page, ProfileHeader, ButtonCard } from 'starterApp/src/components';
@@ -9,10 +8,6 @@ import I18n from 'starterApp/src/lib/i18n';
 
 class Home extends Component {
   props: PropsType;
-
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('account.title'),
-  };
 
   render() {
     return (
