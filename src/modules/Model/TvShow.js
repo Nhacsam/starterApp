@@ -21,6 +21,10 @@ export type TvShowModelActionType =
       payload: { id: number },
     }
   | {
+      type: 'TV_SHOW.SEARCH',
+      payload: { query: string },
+    }
+  | {
       type: 'TV_SHOW.FETCH_LIST_SUCCESS' | 'TV_SHOW.FETCH_SUCCESS',
       payload: {
         result: any,
@@ -28,7 +32,15 @@ export type TvShowModelActionType =
       entities: NormalizedEntitiesType,
     }
   | {
-      type: 'TV_SHOW.FETCH_LIST_FAILURE' | 'TV_SHOW.FETCH_FAILURE',
+      type: 'TV_SHOW.SEARCH_SUCCESS',
+      payload: {
+        result: any,
+        query: string,
+      },
+      entities: NormalizedEntitiesType,
+    }
+  | {
+      type: 'TV_SHOW.FETCH_LIST_FAILURE' | 'TV_SHOW.FETCH_FAILURE' | 'TV_SHOW.SEARCH_FAILURE',
       payload: {},
     };
 
@@ -68,6 +80,23 @@ export const fetchSuccess = (result: NormalizedResultType): TvShowModelActionTyp
 });
 export const fetchFailure = (): TvShowModelActionType => ({
   type: 'TV_SHOW.FETCH_FAILURE',
+  payload: {},
+});
+
+export const search = (query: string): TvShowModelActionType => ({
+  type: 'TV_SHOW.SEARCH',
+  payload: { query },
+});
+export const searchSuccess = (
+  result: NormalizedResultType,
+  query: string
+): TvShowModelActionType => ({
+  type: 'TV_SHOW.SEARCH_SUCCESS',
+  entities: result.entities,
+  payload: { result: result.result, query },
+});
+export const searchFailure = (): TvShowModelActionType => ({
+  type: 'TV_SHOW.SEARCH_FAILURE',
   payload: {},
 });
 
@@ -132,6 +161,11 @@ export const listSelector = (state: StateType, ids: number[] | { [any]: number }
   return _.filter(entities, (entity: ?TvShowType): boolean => !!entity);
 };
 
+// $FlowFixMe
+export const entitiesSelector = (state: StateType): TvShowType[] => {
+  return Object.values(state.model.tvShow.entities);
+};
+
 // SAGAS
 const tvShowListSchema = {
   results: new schema.Values(tvShowSchema),
@@ -155,7 +189,19 @@ function* fetchSaga(action): Generator<*, *, *> {
   }
 }
 
+function* searchSaga(action): Generator<*, *, *> {
+  try {
+    const response = yield call(api.searchTvShow, action.payload.query);
+    yield put(searchSuccess(normalize(response, tvShowListSchema), action.payload.query));
+  } catch (e) {
+    yield put(searchFailure());
+  }
+}
+
 export function* tvShowModelSaga(): Generator<*, *, *> {
-  yield all([takeLatest('TV_SHOW.FETCH_LIST', fetchListSaga)]);
-  yield all([takeLatest('TV_SHOW.FETCH', fetchSaga)]);
+  yield all([
+    takeLatest('TV_SHOW.FETCH_LIST', fetchListSaga),
+    takeLatest('TV_SHOW.FETCH', fetchSaga),
+    takeLatest('TV_SHOW.SEARCH', searchSaga),
+  ]);
 }

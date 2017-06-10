@@ -9,13 +9,14 @@ import { Page, LoadingPage, TvShowListItem } from 'components';
 import searchHeaderNavigationConfig from 'starterApp/src/components/searchHeaderNavigationConfig';
 import I18n from 'lib/i18n';
 
-type Props = {
+export type Props = {
   navigation: any,
   tvShows: TvShowType[],
   refresh: () => {},
   refreshing: boolean,
   fetching: boolean,
   onSelect: (id: number) => {},
+  search: (text: string) => {},
 };
 
 class Home extends Component<void, Props, void> {
@@ -23,9 +24,7 @@ class Home extends Component<void, Props, void> {
 
   componentWillMount() {
     this.props.navigation.setParams({
-      onSearchTextChange: text => {
-        console.log('search', text);
-      },
+      onSearchTextChange: this.props.search,
     });
   }
 

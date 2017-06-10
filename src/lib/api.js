@@ -70,3 +70,4 @@ export const updateUser = (user: UserType): Promise<UserType> =>
 
 export const getTvShows = (): Promise<any> => request(`/TvShows`);
 export const getTvShow = (id: number): Promise<any> => request(`/TvShows/${id}`);
+export const searchTvShow = (query: string): Promise<any> => request(`/TvShows/search/${query}`);

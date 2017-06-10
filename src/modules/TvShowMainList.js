@@ -1,7 +1,7 @@
 // @flow
-import { takeLatest, put, all } from 'redux-saga/effects';
+import { takeLatest, put, all, throttle, fork } from 'redux-saga/effects';
 
-import { fetchList, listSelector } from './Model/TvShow';
+import { fetchList, listSelector, entitiesSelector, search as searchRequest } from './Model/TvShow';
 import { takeEveryPathEnter } from './Navigation';
 
 import type { TvShowModelActionType as ModelActionType } from './Model/TvShow';
@@ -14,10 +14,20 @@ export const refresh = (): ActionType => ({
   payload: {},
 });
 
-export type ActionType = {
-  type: 'TV_SHOW_MAIN_LIST.REFRESH_LIST',
-  payload: {},
-};
+export const search = (query: string): ActionType => ({
+  type: 'TV_SHOW_MAIN_LIST.SEARCH',
+  payload: { query },
+});
+
+export type ActionType =
+  | {
+      type: 'TV_SHOW_MAIN_LIST.REFRESH_LIST',
+      payload: {},
+    }
+  | {
+      type: 'TV_SHOW_MAIN_LIST.SEARCH',
+      payload: { query: string },
+    };
 
 export type StateType = {
   fetching: boolean,
@@ -27,6 +37,15 @@ export type StateType = {
   page: ?number,
   totalResults: ?number,
   totalPages: ?number,
+  currentSearch: string,
+  searches: {
+    [string]: {
+      results: number[],
+      page: ?number,
+      totalResults: ?number,
+      totalPages: ?number,
+    },
+  },
 };
 
 const initialState: StateType = {
@@ -37,6 +56,8 @@ const initialState: StateType = {
   page: null,
   totalResults: null,
   totalPages: null,
+  currentSearch: '',
+  searches: {},
 };
 
 // REDUCER
@@ -73,6 +94,32 @@ export function reducer(
         refreshing: false,
         error: true,
       };
+    case 'TV_SHOW.SEARCH':
+      return {
+        ...state,
+        currentSearch: action.payload.query,
+      };
+    case 'TV_SHOW.SEARCH_SUCCESS':
+      console.log(action);
+      return {
+        ...state,
+        searches: {
+          ...state.searches,
+          [action.payload.query]: {
+            results: action.payload.result.results,
+            page: action.payload.result.page,
+            totalResults: action.payload.result.total_results,
+            totalPages: action.payload.result.total_pages,
+          },
+        },
+      };
+
+    case 'persist/REHYDRATE':
+      return {
+        ...state,
+        ...action.payload.tvShowMainList,
+        currentSearch: '',
+      };
     default:
       return state;
   }
@@ -83,17 +130,34 @@ export const fetchingSelector = (state: GlobalStateType): boolean => state.tvSho
 export const refreshingSelector = (state: GlobalStateType): boolean =>
   state.tvShowMainList.refreshing;
 export const errorSelector = (state: GlobalStateType): boolean => state.tvShowMainList.error;
-export const tvShowsSelector = (state: GlobalStateType): TvShowType[] =>
-  listSelector(state, state.tvShowMainList.results);
+export const tvShowsSelector = (state: GlobalStateType): TvShowType[] => {
+  const currentSearch = state.tvShowMainList.currentSearch;
+  if (currentSearch) {
+    const searchState = state.tvShowMainList.searches[currentSearch];
+    if (searchState) {
+      return listSelector(state, searchState.results);
+    }
+
+    return entitiesSelector(state).filter((tvShow: TvShowType) => {
+      return tvShow.name.toLowerCase().includes(currentSearch.toLowerCase());
+    });
+  }
+  return listSelector(state, state.tvShowMainList.results);
+};
 
 // SAGAS
 function* fetchSaga(action): Generator<*, *, *> {
   yield put(fetchList());
 }
 
+function* searchSaga(action): Generator<*, *, *> {
+  yield put(searchRequest(action.payload.query));
+}
+
 export function* saga(): Generator<*, *, *> {
   yield all([
     takeLatest('TV_SHOW_MAIN_LIST.REFRESH_LIST', fetchSaga),
+    throttle(500, 'TV_SHOW_MAIN_LIST.SEARCH', searchSaga),
     takeEveryPathEnter('dashboard/dashboardTabs/home', fetchSaga),
   ]);
 }

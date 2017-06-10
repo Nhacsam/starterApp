@@ -16,6 +16,7 @@ const navigationOptions: NavigationScreenConfig = ({ navigation, navigationOptio
     headerTitle: (
       <View style={styles.inputContainer}>
         <TextInput
+          keyboardType="web-search"
           ref={ref => (input = ref)}
           underlineColorAndroid="transparent"
           style={styles.input}
