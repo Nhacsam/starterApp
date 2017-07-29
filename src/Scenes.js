@@ -3,8 +3,8 @@ import React from 'react';
 import { StackNavigator, TabNavigator, HeaderBackButton } from 'react-navigation';
 
 import * as Pages from './pages';
-import theme from './theme';
-import I18n from 'starterApp/src/lib/i18n';
+import theme from 'theme';
+import I18n from 'lib/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TabIcon = props => <Icon color={props.tintColor} size={30} {...props} />;

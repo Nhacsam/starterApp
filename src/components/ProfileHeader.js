@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, Text, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Page, Touchable } from 'components';
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
 type Props = {
   user: ?Object,

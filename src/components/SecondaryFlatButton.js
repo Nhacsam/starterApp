@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
 import Button from './Button';
 import type { Props } from './Button';

@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
-import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/components';
-import theme from 'starterApp/src/theme';
-import I18n from 'starterApp/src/lib/i18n';
+import { Page, Button, TextInput, SecondaryFlatButton } from 'components';
+import theme from 'theme';
+import I18n from 'lib/i18n';
 
 type Props = {
   navigation: any,

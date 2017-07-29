@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 
-import { Page, ProfileHeader, ButtonCard } from 'starterApp/src/components';
+import { Page, ProfileHeader, ButtonCard } from 'components';
 
-import I18n from 'starterApp/src/lib/i18n';
+import I18n from 'lib/i18n';
 
 type Props = {
   navigation: any,

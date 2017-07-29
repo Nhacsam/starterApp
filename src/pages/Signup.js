@@ -4,9 +4,9 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page, Button, TextInput } from 'starterApp/src/components';
-import theme from 'starterApp/src/theme';
-import I18n from 'starterApp/src/lib/i18n';
+import { Page, Button, TextInput } from 'components';
+import theme from 'theme';
+import I18n from 'lib/i18n';
 
 type Props = {
   navigator: any,

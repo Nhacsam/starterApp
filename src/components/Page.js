@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
 type Props = {
   children: React.Element<*>,

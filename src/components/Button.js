@@ -4,7 +4,7 @@ import { Text, StyleSheet } from 'react-native';
 
 import Touchable from './Touchable';
 
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
 export type Props = {
   text?: string,

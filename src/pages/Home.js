@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { NavigationTabScreenOptions } from 'react-navigation';
-import { Page } from 'starterApp/src/components';
-import theme from 'starterApp/src/theme';
-import I18n from 'starterApp/src/lib/i18n';
+import { Page } from 'components';
+import theme from 'theme';
+import I18n from 'lib/i18n';
 
 type Props = {
   navigation: any,

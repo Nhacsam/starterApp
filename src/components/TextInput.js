@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import { Text, TextInput as RNTextInput, View, StyleSheet } from 'react-native';
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
 type Props = {
   errorMessage?: string,
