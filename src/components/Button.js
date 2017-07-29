@@ -1,7 +1,7 @@
 // @flow
-
 import React, { PureComponent } from 'react';
 import { Text, StyleSheet } from 'react-native';
+
 import Touchable from './Touchable';
 
 import theme from 'starterApp/src/theme';
@@ -50,8 +50,8 @@ type PropsTypes = {
   text?: string,
   onPress: () => void,
   children?: React.Element<*>,
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  textStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+  style?: any,
+  textStyle?: any,
 };
 
 export default Button;

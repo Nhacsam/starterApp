@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 
 import { Page, ProfileHeader, ButtonCard } from 'starterApp/src/components';
+
 import I18n from 'starterApp/src/lib/i18n';
 
 class Home extends Component {

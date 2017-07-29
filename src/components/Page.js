@@ -13,18 +13,17 @@ class Page extends Component {
           paddingTop: this.props.noNavBar ? 0 : 16,
           paddingHorizontal: this.props.noPadding ? 0 : 32,
           backgroundColor: this.props.backgroundColor,
-          width: Dimensions.get('window').width,
         },
         this.props.style,
       ],
-      children: this.props.children,
     };
-
-    if (this.props.backgroundImage) {
-      return <Image source={this.props.backgroundImage} {...viewProps} />;
-    }
-
-    return <View {...viewProps} />;
+    return (
+      <View {...viewProps}>
+        {this.props.backgroundImage &&
+          <Image source={this.props.backgroundImage} style={styles.image} resizeMode="cover" />}
+        {this.props.children}
+      </View>
+    );
   }
 }
 
@@ -33,6 +32,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
+  },
+  image: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });
 
