@@ -11,8 +11,6 @@ type Props = {
 };
 
 class Landing extends Component<void, Props, void> {
-  props: PropsType;
-
   render() {
     return (
       <Page style={styles.content} backgroundImage={theme.images.landing}>

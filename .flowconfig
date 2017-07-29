@@ -14,12 +14,9 @@
 .*/Libraries/react-native/React.js
 .*/Libraries/react-native/ReactNative.js
 
-; test
-.*/*.tests.js
-.*/__tests__/*
-
-.*/node_modules/react-navigation/.*
-.*/node_modules/metro-bundler/.*
+.*/__tests__
+.*/node_modules/react-navigation
+.*/node_modules/react-native-tab-view
 
 [include]
 

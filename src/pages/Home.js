@@ -12,8 +12,6 @@ type Props = {
 };
 
 class Home extends Component<void, Props, void> {
-  props: PropsType;
-
   render() {
     return (
       <Page>
