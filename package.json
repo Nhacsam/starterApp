@@ -10,14 +10,14 @@
     "test:flow": "flow",
     "test:flow:start": "flow start",
     "test:flow:check": "flow check",
-    "prettify": "prettier --stdin --trailing-comma es5 --single-quote --print-width 100 src/**/*.js"
+    "prettify": "prettier --write --trailing-comma es5 --single-quote --print-width 100 src/**/*.js"
   },
   "dependencies": {
     "react": "16.0.0-alpha.12",
     "react-native": "0.46.4",
     "react-native-i18n": "^1.0.0",
     "react-native-vector-icons": "^4.1.1",
-    "react-navigation": "^1.0.0-beta.11"
+    "react-navigation": "^1.0.0-beta.12"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -26,16 +26,16 @@
     "babel-preset-react-native": "^1.9.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "eslint": "^3.19.0",
-    "eslint-config-prettier": "^1.7.0",
+    "eslint-config-prettier": "^2.3.0",
     "eslint-config-react-app": "^0.6.2",
     "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-prettier": "^2.0.1",
+    "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^6.10.0",
-    "flow-bin": "^0.45.0",
+    "flow-bin": "0.47.0",
     "jest": "^20.0.4",
-    "prettier": "^1.2.2",
+    "prettier": "^1.5.3",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "jest": {
