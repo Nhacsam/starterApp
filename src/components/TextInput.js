@@ -3,9 +3,14 @@ import React, { Component, PropTypes } from 'react';
 import { Text, TextInput as RNTextInput, View, StyleSheet } from 'react-native';
 import theme from 'starterApp/src/theme';
 
-class TextInput extends Component {
-  props: PropsType;
+type Props = {
+  errorMessage?: string,
+  type: 'name' | 'text' | 'email' | 'password' | 'digits' | 'numeric',
+  containerStyle?: PropTypes.number,
+  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+};
 
+class TextInput extends Component<void, Props, void> {
   getTypeProps() {
     switch (this.props.type) {
       case 'name':
@@ -102,12 +107,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 });
-
-type PropsType = {
-  errorMessage?: string,
-  type: 'name' | 'text' | 'email' | 'password' | 'digits' | 'numeric',
-  containerStyle?: PropTypes.number,
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-};
 
 export default TextInput;

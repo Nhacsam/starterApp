@@ -8,13 +8,11 @@ import { Page, ProfileHeader, ButtonCard } from 'starterApp/src/components';
 
 import I18n from 'starterApp/src/lib/i18n';
 
-class Home extends Component {
-  props: PropsType;
+type Props = {
+  navigation: any,
+};
 
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('account.title'),
-  };
-
+class Account extends Component<void, Props, void> {
   _logout() {
     // @see https://github.com/react-community/react-navigation/issues/1127
     const resetAction = NavigationActions.reset({
@@ -34,9 +32,4 @@ class Home extends Component {
     );
   }
 }
-
-type PropsType = {
-  navigation: any,
-};
-
-export default Home;
+export default Account;

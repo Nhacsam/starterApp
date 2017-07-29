@@ -7,11 +7,11 @@ import { Page } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
-class Home extends Component {
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('home.title'),
-  };
+type Props = {
+  navigation: any,
+};
 
+class Home extends Component<void, Props, void> {
   props: PropsType;
 
   render() {
@@ -37,9 +37,5 @@ const styles = StyleSheet.create({
     ...theme.fonts.pageTitle,
   },
 });
-
-type PropsType = {
-  navigation: any,
-};
 
 export default Home;

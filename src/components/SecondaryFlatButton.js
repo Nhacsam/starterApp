@@ -5,8 +5,9 @@ import { StyleSheet } from 'react-native';
 import theme from 'starterApp/src/theme';
 
 import Button from './Button';
+import type { Props } from './Button';
 
-class SecondaryFlatButton extends Component {
+class SecondaryFlatButton extends Component<void, Props, void> {
   render() {
     return (
       <Button

@@ -33,6 +33,7 @@ const SignUpStack = StackNavigator(
     signup: {
       screen: Pages.Signup,
       navigationOptions: props => ({
+        title: I18n.t('signup.title'),
         headerLeft: (
           <HeaderBackButton
             onPress={() => {
@@ -60,6 +61,7 @@ const DashboardTab = TabNavigator(
     home: {
       screen: Pages.Home,
       navigationOptions: {
+        title: I18n.t('home.title'),
         tabBarIcon: props => <TabIcon name="home" {...props} />,
       },
     },

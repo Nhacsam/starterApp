@@ -1,17 +1,27 @@
 // @flow
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Text, StyleSheet } from 'react-native';
 
 import Touchable from './Touchable';
 
 import theme from 'starterApp/src/theme';
 
-class Button extends PureComponent {
-  static defaultProps: PropsTypes = {
+export type Props = {
+  text?: string,
+  onPress: () => void,
+  children?: React.Element<*>,
+  style?: any,
+  textStyle?: any,
+};
+
+type DefaultProps = {
+  onPress: () => void,
+};
+
+class Button extends Component<DefaultProps, Props, void> {
+  static defaultProps: DefaultProps = {
     onPress: () => {},
   };
-
-  props: PropsTypes;
 
   render() {
     const { style, text, textStyle, children, ...rest } = this.props;
@@ -45,13 +55,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-type PropsTypes = {
-  text?: string,
-  onPress: () => void,
-  children?: React.Element<*>,
-  style?: any,
-  textStyle?: any,
-};
 
 export default Button;

@@ -8,13 +8,11 @@ import { Page, Button, TextInput } from 'starterApp/src/components';
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
-class Home extends Component {
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('signup.title'),
-  };
+type Props = {
+  navigator: any,
+};
 
-  props: PropsType;
-
+class Signup extends Component<void, Props, void> {
   _goToHomePage() {
     // @see https://github.com/react-community/react-navigation/issues/1127
     const resetAction = NavigationActions.reset({
@@ -45,13 +43,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  title: {
-    ...theme.fonts.pageTitle,
-  },
 });
 
-type PropsType = {
-  navigator: any,
-};
-
-export default Home;
+export default Signup;

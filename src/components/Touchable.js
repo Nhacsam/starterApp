@@ -35,7 +35,7 @@ type DefaultProps = {
 };
 
 export default class Touchable extends Component<DefaultProps, Props, void> {
-  static defaultProps = {
+  static defaultProps: DefaultProps = {
     pressColor: 'rgba(0, 0, 0, .32)',
     activeOpacity: 0.7,
     disabled: false,

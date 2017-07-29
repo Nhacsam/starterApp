@@ -7,9 +7,11 @@ import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/com
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
-class Login extends Component {
-  props: PropsType;
+type Props = {
+  navigation: any,
+};
 
+class Login extends Component<void, Props, void> {
   _goToHomePage() {
     // @see https://github.com/react-community/react-navigation/issues/1127
     const resetAction = NavigationActions.reset({
@@ -43,9 +45,5 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 });
-
-type PropsType = {
-  navigation: any,
-};
 
 export default Login;
