@@ -13,6 +13,7 @@ export type Props = {
   navigation: any,
   tvShows: TvShowType[],
   refresh: () => {},
+  fetchTvShows: () => {},
   refreshing: boolean,
   fetching: boolean,
   onSelect: (id: number) => {},
@@ -28,6 +29,10 @@ class Home extends Component<void, Props, void> {
     });
   }
 
+  componentDidMount() {
+    this.props.fetchTvShows();
+  }
+
   render() {
     const { fetching, refreshing, tvShows } = this.props;
 
@@ -40,9 +45,8 @@ class Home extends Component<void, Props, void> {
         <FlatList
           style={{ flex: 1 }}
           data={tvShows}
-          renderItem={({ item }) => (
-            <TvShowListItem tvShow={item} onPress={() => this.props.onSelect(item.id)} />
-          )}
+          renderItem={({ item }) =>
+            <TvShowListItem tvShow={item} onPress={() => this.props.onSelect(item.id)} />}
           initialNumToRender={4}
           keyExtractor={tvShow => tvShow.id}
           onRefresh={this.props.refresh}

@@ -13,6 +13,8 @@ export const refresh = (): ActionType => ({
   payload: {},
 });
 
+export const fetchTvShows = fetchList;
+
 export const search = (query: string): ActionType => ({
   type: 'TV_SHOW_MAIN_LIST.SEARCH',
   payload: { query },

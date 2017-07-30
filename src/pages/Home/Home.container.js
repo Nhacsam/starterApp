@@ -8,6 +8,7 @@ import {
   fetchingSelector,
   refreshingSelector,
   refresh,
+  fetchTvShows,
   search,
 } from 'modules/TvShowMainList';
 import { showDetail } from 'modules/TvShowDetail';
@@ -20,6 +21,7 @@ const mapStateToProps = (state: StateType): $Shape<Props> => ({
 
 const mapDispatchToProps: $Shape<Props> = {
   refresh,
+  fetchTvShows,
   onSelect: showDetail,
   search,
 };

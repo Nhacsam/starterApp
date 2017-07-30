@@ -71,10 +71,10 @@ export const accessTokenCreationDateSelector = (state: StateType): ?Date => {
 export const accessTokenExpirationDateSelector = (state: StateType): number => {
   const accessTokenCreationDate = accessTokenCreationDateSelector(state);
   const ttl = accessTokenTtlSelector(state);
-  if (!accessTokenCreationDate) {
+  if (!accessTokenCreationDate || !ttl) {
     return 0;
   }
-  return accessTokenCreationDate.getTime() + ttl;
+  return accessTokenCreationDate.getTime() + ttl * 1000;
 };
 
 // SAGAS

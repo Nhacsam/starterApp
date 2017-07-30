@@ -1,8 +1,9 @@
 // @flow
-import { takeLatest, put, all, race, take } from 'redux-saga/effects';
+import { takeLatest, put, all, race, take, select } from 'redux-saga/effects';
 
 import { reset } from './Navigation';
-import { login as sendLogin, type AuthModelActionType } from './Model/Auth';
+import { login as sendLogin, type AuthModelActionType, authUserIdSelector } from './Model/Auth';
+import { fetch as fetchUser } from './Model/User';
 
 import type { StateType } from './reducers';
 
@@ -72,6 +73,9 @@ function* sendLoginSaga(action): Generator<*, *, *> {
   });
   if (result.success) {
     yield put(reset('dashboard'));
+
+    const userId = yield select(authUserIdSelector);
+    yield put(fetchUser(userId));
   }
 }
 
