@@ -6,9 +6,13 @@ import type { UserType } from 'modelDefinition';
 import { Page, ProfileHeader, ButtonCard } from 'starterApp/src/components';
 import I18n from 'starterApp/src/lib/i18n';
 
-class Home extends Component {
-  props: PropsType;
+type Props = {
+  navigation: any,
+  logout: Function,
+  currentUser: UserType,
+};
 
+class Account extends Component<void, Props, void> {
   render() {
     return (
       <Page noPadding>
@@ -22,10 +26,4 @@ class Home extends Component {
   }
 }
 
-type PropsType = {
-  navigation: any,
-  logout: Function,
-  currentUser: UserType,
-};
-
-export default Home;
+export default Account;

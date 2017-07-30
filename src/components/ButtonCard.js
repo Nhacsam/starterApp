@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -13,7 +13,7 @@ type Props = {
   canHaveValue?: boolean,
 };
 
-class ButtonCard extends Component<void, Props, void> {
+class ButtonCard extends PureComponent<void, Props, void> {
   render() {
     const { canHaveValue, value } = this.props;
     return (

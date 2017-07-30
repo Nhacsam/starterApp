@@ -4,16 +4,31 @@ import React, { PureComponent } from 'react';
 import { Text, StyleSheet, ActivityIndicator } from 'react-native';
 import Touchable from './Touchable';
 
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
-class Button extends PureComponent {
-  static defaultProps: PropsTypes = {
+export type Props = {
+  text?: string,
+  onPress: () => void,
+  children?: React.Element<*>,
+  style?: any,
+  textStyle?: any,
+  fetching: boolean,
+  borderless: boolean,
+
+};
+
+type DefaultProps = {
+  onPress: () => void,
+  fetching: boolean,
+  borderless: boolean,
+};
+
+class Button extends PureComponent<DefaultProps, Props, void> {
+  static defaultProps: DefaultProps = {
     onPress: () => {},
     fetching: false,
     borderless: false,
   };
-
-  props: PropsTypes;
 
   render() {
     const { style, children, text, textStyle, fetching, ...rest } = this.props;
@@ -50,15 +65,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-type PropsTypes = {
-  text?: string,
-  onPress: () => void,
-  children?: React.Element<*>,
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  textStyle?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  fetching: boolean,
-  borderless: boolean,
-};
 
 export default Button;

@@ -1,30 +1,49 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
-import theme from 'starterApp/src/theme';
+import theme from 'theme';
 
-class Page extends Component {
-  props: PropTypes;
+type Props = {
+  children: React.Element<*>,
+  noPadding: boolean,
+  noNavBar: boolean,
+  backgroundColor: string,
+  style?: any,
+  backgroundImage?: any,
+};
+
+type DefaultProps = {
+  children: React.Element<*>,
+  noPadding: boolean,
+  noNavBar: boolean,
+  backgroundColor: string,
+};
+
+class Page extends Component<DefaultProps, Props, void> {
+  static defaultProps: DefaultProps = {
+    children: null,
+    noPadding: false,
+    noNavBar: false,
+    backgroundColor: theme.colors.background,
+  };
   static DEFAULT_PADDING = 32;
 
   render() {
-    const viewProps = {
-      style: [
-        styles.page,
-        {
-          paddingHorizontal: this.props.noPadding ? 0 : Page.DEFAULT_PADDING,
-          backgroundColor: this.props.backgroundColor,
-          width: Dimensions.get('window').width,
-        },
-        this.props.style,
-      ],
-      children: this.props.children,
-    };
+    const containerStyle = StyleSheet.flatten([
+      styles.page,
+      {
+        paddingHorizontal: this.props.noPadding ? 0 : Page.DEFAULT_PADDING,
+        backgroundColor: this.props.backgroundColor,
+      },
+      this.props.style,
+    ]);
 
-    if (this.props.backgroundImage) {
-      return <Image source={this.props.backgroundImage} {...viewProps} />;
-    }
-
-    return <View {...viewProps} />;
+    return (
+      <View style={containerStyle}>
+        {this.props.backgroundImage &&
+          <Image source={this.props.backgroundImage} style={styles.image} resizeMode="cover" />}
+        {this.props.children}
+      </View>
+    );
   }
 }
 
@@ -34,20 +53,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
+  image: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
 });
-
-type PropTypes = {
-  children: React.Element<*>,
-  noPadding: boolean,
-  backgroundColor: string,
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
-  backgroundImage?: any,
-};
-
-Page.defaultProps = {
-  children: null,
-  noPadding: false,
-  backgroundColor: theme.colors.background,
-};
 
 export default Page;

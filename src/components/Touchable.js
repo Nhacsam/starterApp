@@ -10,13 +10,7 @@
  * of TouchableNativeFeedback.
  */
 import React, { Component, Children } from 'react';
-import {
-  Platform,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Platform, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 
 const ANDROID_VERSION_LOLLIPOP = 21;
 
@@ -27,7 +21,7 @@ type Props = {
   pressColor?: ?string,
   activeOpacity?: number,
   children?: React.Element<*>,
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+  style?: any,
   disabled?: ?boolean,
   disabledOpacity?: number,
   useOpacity?: boolean,
@@ -41,7 +35,7 @@ type DefaultProps = {
 };
 
 export default class Touchable extends Component<DefaultProps, Props, void> {
-  static defaultProps = {
+  static defaultProps: DefaultProps = {
     pressColor: 'rgba(0, 0, 0, .32)',
     activeOpacity: 0.7,
     disabled: false,

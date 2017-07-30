@@ -7,13 +7,12 @@ import type { UserType } from 'modelDefinition';
 import { Page, ButtonCard } from 'components';
 import I18n from 'lib/i18n';
 
-class EditAccount extends Component {
-  props: PropTypes;
+type Props = {
+  user: UserType,
+  edit: (name: string, initialValue: string, inputType: string) => {},
+};
 
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('editAccount.title'),
-  };
-
+class EditAccount extends Component<void, Props, void> {
   render() {
     const { user, edit } = this.props;
     return (
@@ -46,10 +45,5 @@ class EditAccount extends Component {
     );
   }
 }
-
-type PropTypes = {
-  user: UserType,
-  edit: (name: string, initialValue: string, inputType: string) => {},
-};
 
 export default EditAccount;

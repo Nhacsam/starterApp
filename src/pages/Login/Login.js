@@ -6,9 +6,19 @@ import { Page, Button, TextInput, SecondaryFlatButton } from 'starterApp/src/com
 import theme from 'starterApp/src/theme';
 import I18n from 'starterApp/src/lib/i18n';
 
-class Login extends Component {
-  props: PropsType;
-  state: StateType;
+type Props = {
+  navigation: any,
+  login: Function,
+  posting: boolean,
+  failure: boolean,
+};
+
+type State = {
+  email: string,
+  password: string,
+};
+
+class Login extends Component<void, Props, State> {
   password: TextInput;
 
   constructor(props: PropsType) {
@@ -43,7 +53,10 @@ class Login extends Component {
             onSubmitEditing={this.sendLogin}
           />
 
-          {this.props.failure && <Text style={styles.error}>{I18n.t('login.failure')}</Text>}
+          {this.props.failure &&
+            <Text style={styles.error}>
+              {I18n.t('login.failure')}
+            </Text>}
           <Button
             onPress={() => this.sendLogin()}
             text={I18n.t('login.login')}
@@ -69,17 +82,5 @@ const styles = StyleSheet.create({
     ...theme.fonts.error,
   },
 });
-
-type PropsType = {
-  navigation: any,
-  login: Function,
-  posting: boolean,
-  failure: boolean,
-};
-
-type StateType = {
-  email: string,
-  password: string,
-};
 
 export default Login;

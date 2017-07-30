@@ -15,10 +15,9 @@ import type { NavigationScreenProp } from 'react-navigation';
 
 import * as Pages from './pages';
 import theme from './theme';
-import I18n from 'starterApp/src/lib/i18n';
+import I18n from 'lib/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const onAndroid = options => (Platform.OS === 'ios' ? undefined : options);
 const TabIcon = props => <Icon color={props.tintColor} size={30} {...props} />;
 
 const LandingStack = StackNavigator(
@@ -45,6 +44,7 @@ const SignUpStack = StackNavigator(
     signup: {
       screen: Pages.Signup,
       navigationOptions: props => ({
+        title: I18n.t('signup.title'),
         headerLeft: (
           <HeaderBackButton
             onPress={() => {
@@ -117,6 +117,9 @@ const DashboardStack = StackNavigator(
     },
     editAccount: {
       screen: Pages.EditAccount,
+      navigationOptions: {
+        title: I18n.t('editAccount.title'),
+      },
     },
     singleInputForm: {
       screen: Pages.SingleInputForm,
@@ -149,7 +152,7 @@ export const RootNavigator = StackNavigator(
     },
   },
   {
-    initialRouteName: 'dashboard',
+    initialRouteName: 'landing',
     headerMode: 'none',
   }
 );

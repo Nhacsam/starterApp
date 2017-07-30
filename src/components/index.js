@@ -1,14 +1,44 @@
 /**
  * @providesModule components
  */
-export { default as Page } from './Page';
-export { default as Button } from './Button';
-export { default as TextInput } from './TextInput';
-export { default as SecondaryFlatButton } from './SecondaryFlatButton';
-export { default as ProfileHeader } from './ProfileHeader';
-export { default as ButtonCard } from './ButtonCard';
-export { default as Touchable } from './Touchable';
-export { default as NavDoneButton } from './NavDoneButton';
-export { default as LoadingPage } from './LoadingPage';
-export { default as ListItem } from './ListItem';
-export { default as TvShowListItem } from './TvShowListItem';
+
+/**
+ * This syntax prevent circular import
+ * prevent some break in hot reaload
+ * and optimize the number of file imported
+ */
+module.exports = {
+  get Page() {
+    return require('./Page').default;
+  },
+  get Button() {
+    return require('./Button').default;
+  },
+  get TextInput() {
+    return require('./TextInput').default;
+  },
+  get SecondaryFlatButton() {
+    return require('./SecondaryFlatButton').default;
+  },
+  get ProfileHeader() {
+    return require('./ProfileHeader').default;
+  },
+  get ButtonCard() {
+    return require('./ButtonCard').default;
+  },
+  get Touchable() {
+    return require('./Touchable').default;
+  },
+  get NavDoneButton() {
+    return require('./NavDoneButton').default;
+  },
+  get LoadingPage() {
+    return require('./LoadingPage').default;
+  },
+  get ListItem() {
+    return require('./ListItem').default;
+  },
+  get TvShowListItem() {
+    return require('./TvShowListItem').default;
+  },
+};

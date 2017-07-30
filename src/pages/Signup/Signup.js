@@ -9,11 +9,21 @@ import I18n from 'starterApp/src/lib/i18n';
 
 import type { UserCreateFormType } from 'starterApp/src/modules/Model/User';
 
-class Home extends Component {
-  static navigationOptions: NavigationTabScreenOptions = {
-    title: I18n.t('signup.title'),
-  };
+type Props = {
+  navigator: any,
+  register: (user: UserCreateFormType) => {},
+  saving: boolean,
+  failure: boolean,
+};
 
+type State = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+};
+
+class Signup extends Component<void, Props, State> {
   lastNameInput: TextInput;
   emailInput: TextInput;
   passwordInput: TextInput;
@@ -29,8 +39,6 @@ class Home extends Component {
       password: '',
     };
   }
-
-  props: PropsType;
 
   render() {
     return (
@@ -67,7 +75,10 @@ class Home extends Component {
             returnKeyType="send"
             onSubmitEditing={() => this.props.register(this.state)}
           />
-          {this.props.failure && <Text style={styles.error}>{I18n.t('user.registerFailure')}</Text>}
+          {this.props.failure &&
+            <Text style={styles.error}>
+              {I18n.t('user.registerFailure')}
+            </Text>}
           <Button
             onPress={() => this.props.register(this.state)}
             text={I18n.t('signup.signup')}
@@ -92,11 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-type PropsType = {
-  navigator: any,
-  register: (user: UserCreateFormType) => {},
-  saving: boolean,
-  failure: boolean,
-};
-
-export default Home;
+export default Signup;
