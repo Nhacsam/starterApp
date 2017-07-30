@@ -6,29 +6,27 @@ import Touchable from './Touchable';
 
 import theme from 'theme';
 
-export type Props = {
+type Props = {
   text?: string,
   onPress: () => void,
   children?: React.Element<*>,
   style?: any,
   textStyle?: any,
-  fetching: boolean,
+  fetching?: ?boolean,
   borderless: boolean,
-
 };
 
 type DefaultProps = {
   onPress: () => void,
   fetching: boolean,
-  borderless: boolean,
 };
 
 class Button extends PureComponent<DefaultProps, Props, void> {
   static defaultProps: DefaultProps = {
     onPress: () => {},
     fetching: false,
-    borderless: false,
   };
+  props: Props;
 
   render() {
     const { style, children, text, textStyle, fetching, ...rest } = this.props;
@@ -36,7 +34,11 @@ class Button extends PureComponent<DefaultProps, Props, void> {
     if (fetching) {
       content = <ActivityIndicator color={theme.colors.overPrimary} />;
     } else if (text) {
-      content = <Text style={[styles.text, textStyle]}>{text.toUpperCase()}</Text>;
+      content = (
+        <Text style={[styles.text, textStyle]}>
+          {text.toUpperCase()}
+        </Text>
+      );
     } else {
       content = children;
     }

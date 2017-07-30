@@ -5,9 +5,15 @@ import { StyleSheet } from 'react-native';
 import theme from 'theme';
 
 import Button from './Button';
-import type { Props } from './Button';
 
-class SecondaryFlatButton extends Component<void, Props, void> {
+type Props = {
+  text?: string,
+  onPress: () => void,
+  children?: React.Element<*>,
+  fetching?: ?boolean,
+};
+
+class SecondaryFlatButton extends Component<void, $Shape<Props>, void> {
   render() {
     return (
       <Button

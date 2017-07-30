@@ -16,20 +16,13 @@ type Props = {
   failure: boolean,
 };
 
-type State = {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-};
-
-class Signup extends Component<void, Props, State> {
+class Signup extends Component<void, Props, UserCreateFormType> {
   lastNameInput: TextInput;
   emailInput: TextInput;
   passwordInput: TextInput;
   state: UserCreateFormType;
 
-  constructor(props: PropsType) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {

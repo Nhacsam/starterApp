@@ -17,6 +17,7 @@
 .*/__tests__
 .*/node_modules/react-navigation
 .*/node_modules/react-native-tab-view
+.*/node_modules/redux-offline
 
 .*/node_modules/redux-saga-test-plan/*
 [include]

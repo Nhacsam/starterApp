@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 type Props = {
-  style?: StyleSheet.Styles | Array<StyleSheet.Styles>,
+  style?: any,
 };
 
 type State = {

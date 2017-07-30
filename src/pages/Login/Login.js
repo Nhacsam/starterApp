@@ -20,8 +20,9 @@ type State = {
 
 class Login extends Component<void, Props, State> {
   password: TextInput;
+  state: State;
 
-  constructor(props: PropsType) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       email: '',

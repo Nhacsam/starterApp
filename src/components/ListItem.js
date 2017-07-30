@@ -28,13 +28,17 @@ class ListItem extends PureComponent<DefaultProps, Props, void> {
         <View style={styles.cardOverlay}>
           <Image style={styles.image} source={{ uri: imageUrl }} />
           <View style={styles.content}>
-            <Text style={styles.name}>{name}</Text>
-            {this.props.texts.map((text, index) => (
-              <Text key={index} style={styles.text}>{text}</Text>
-            ))}
+            <Text style={styles.name}>
+              {name}
+            </Text>
+            {this.props.texts.map((text, index) =>
+              <Text key={index} style={styles.text}>
+                {text}
+              </Text>
+            )}
           </View>
           <View style={styles.iconContainer}>
-            <HeartIcon style={styles.icon} />
+            <HeartIcon />
           </View>
         </View>
       </Image>
