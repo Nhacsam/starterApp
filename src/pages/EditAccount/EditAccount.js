@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 
-import type { NavigationTabScreenOptions } from 'react-navigation';
 import type { UserType } from 'modelDefinition';
 
 import { Page, ButtonCard } from 'components';

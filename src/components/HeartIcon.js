@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Animated, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { View, Animated, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);

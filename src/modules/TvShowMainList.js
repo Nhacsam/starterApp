@@ -1,5 +1,5 @@
 // @flow
-import { takeLatest, put, all, throttle, fork } from 'redux-saga/effects';
+import { takeLatest, put, all, throttle } from 'redux-saga/effects';
 
 import { fetchList, listSelector, entitiesSelector, search as searchRequest } from './Model/TvShow';
 

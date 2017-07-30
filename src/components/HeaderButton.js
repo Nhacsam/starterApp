@@ -76,16 +76,17 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingRight: 10,
   },
-  icon: Platform.OS === 'ios'
-    ? {
-        marginLeft: 10,
-        marginRight: 5,
-        marginVertical: 12,
-        marginRight: 5,
-      }
-    : {
-        margin: 16,
-      },
+  icon:
+    Platform.OS === 'ios'
+      ? {
+          marginLeft: 10,
+          marginRight: 5,
+          marginVertical: 12,
+          marginRight: 5,
+        }
+      : {
+          margin: 16,
+        },
 });
 
 export default NavDoneButton;

@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Platform, BackHandler } from 'react-native';
+import { BackHandler } from 'react-native';
 import {
   addNavigationHelpers,
   StackNavigator,
   TabNavigator,
   HeaderBackButton,
-  Header,
   NavigationActions,
 } from 'react-navigation';
 import { connect } from 'react-redux';

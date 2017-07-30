@@ -3,7 +3,7 @@ import { takeLatest, put, all, race, take, select } from 'redux-saga/effects';
 import type { UserType } from 'modelDefinition';
 import Toast from 'react-native-root-toast';
 
-import { create, fetch as fetchUser, userSelector, update } from './Model/User';
+import { create, userSelector, update } from './Model/User';
 import type { UserModelActionType } from './Model/User';
 
 import I18n from 'lib/i18n';
@@ -96,14 +96,6 @@ function* sendRegisterSaga(action): Generator<*, *, *> {
     return;
   }
   yield put(login(user.email, user.password));
-}
-
-function* fetchCurrentUserSaga(): Generator<*, *, *> {
-  const userId = yield select(authUserIdSelector);
-  if (!userId) {
-    return;
-  }
-  yield put(fetchUser(userId));
 }
 
 function* updateUserSaga(action): Generator<*, *, *> {

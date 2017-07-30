@@ -61,11 +61,12 @@ class TvShowDetail extends Component<void, Props, void> {
           fadeOutForeground
           childrenStyle={{ backgroundColor: theme.colors.background }}
           renderHeader={() => <Image source={image} style={styles.image} />}
-          renderForeground={() => (
+          renderForeground={() =>
             <View style={styles.titleContainer}>
-              <Text style={styles.imageTitle}>{tvShow.name}</Text>
-            </View>
-          )}
+              <Text style={styles.imageTitle}>
+                {tvShow.name}
+              </Text>
+            </View>}
         >
           <TriggeringView
             style={styles.section}
@@ -73,7 +74,9 @@ class TvShowDetail extends Component<void, Props, void> {
             onDisplay={() => this._unsetTitle()}
           >
             <Text style={styles.sectionTitle}>Overview</Text>
-            <Text style={styles.sectionContent}>{tvShow.overview}</Text>
+            <Text style={styles.sectionContent}>
+              {tvShow.overview}
+            </Text>
             {tvShow.genres &&
               <Text style={styles.genres}>
                 {tvShow.genres.reduce(

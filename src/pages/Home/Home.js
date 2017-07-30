@@ -7,7 +7,6 @@ import type { TvShowType } from 'modelDefinition';
 import type { NavigationTabScreenOptions } from 'react-navigation';
 import { Page, LoadingPage, TvShowListItem } from 'components';
 import searchHeaderNavigationConfig from 'starterApp/src/components/searchHeaderNavigationConfig';
-import I18n from 'lib/i18n';
 
 export type Props = {
   navigation: any,

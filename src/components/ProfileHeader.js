@@ -30,9 +30,10 @@ class ProfileHeader extends Component<void, Props, void> {
         </Touchable>
         {user &&
           <View>
-            <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
+            <Text style={styles.name}>
+              {user.firstName} {user.lastName}
+            </Text>
           </View>}
-
       </View>
     );
   }

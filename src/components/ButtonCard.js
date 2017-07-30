@@ -19,9 +19,13 @@ class ButtonCard extends PureComponent<void, Props, void> {
     return (
       <Touchable onPress={this.props.onPress} style={styles.card}>
         <View style={[styles.contentContainer, canHaveValue && styles.canHaveValueContainer]}>
-          <Text style={styles.text}>{this.props.text}</Text>
+          <Text style={styles.text}>
+            {this.props.text}
+          </Text>
           {value
-            ? <Text style={styles.value}>{value}</Text>
+            ? <Text style={styles.value}>
+                {value}
+              </Text>
             : <Icon
                 name="chevron-right"
                 size={30}
