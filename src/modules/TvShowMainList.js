@@ -2,7 +2,6 @@
 import { takeLatest, put, all, throttle, fork } from 'redux-saga/effects';
 
 import { fetchList, listSelector, entitiesSelector, search as searchRequest } from './Model/TvShow';
-import { takeEveryPathEnter } from './Navigation';
 
 import type { TvShowModelActionType as ModelActionType } from './Model/TvShow';
 import type { TvShowType } from 'modelDefinition';
@@ -158,6 +157,5 @@ export function* saga(): Generator<*, *, *> {
   yield all([
     takeLatest('TV_SHOW_MAIN_LIST.REFRESH_LIST', fetchSaga),
     throttle(500, 'TV_SHOW_MAIN_LIST.SEARCH', searchSaga),
-    takeEveryPathEnter('dashboard/dashboardTabs/home', fetchSaga),
   ]);
 }

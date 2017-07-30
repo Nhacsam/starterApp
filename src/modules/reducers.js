@@ -30,7 +30,7 @@ import {
   type SingleInputActionsType,
 } from './SingleInputForm';
 
-import { navigationReducer } from './Navigation';
+import { default as navigationReducer } from './Navigation/reducer.js';
 
 import type { NavigationState, NavigationAction } from 'react-navigation';
 
