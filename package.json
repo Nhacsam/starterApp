@@ -10,8 +10,7 @@
     "test:flow": "flow",
     "test:flow:start": "flow start",
     "test:flow:check": "flow check",
-    "prettify": "prettier --write --trailing-comma es5 --single-quote --print-width 100 src/**/*.js",
-    "storybook": "storybook start -p 7007"
+    "prettify": "prettier --write --trailing-comma es5 --single-quote --print-width 100 src/**/*.js"
   },
   "dependencies": {
     "normalizr": "^3.2.2",
@@ -31,7 +30,6 @@
     "redux-saga-test-plan": "^3.1.0"
   },
   "devDependencies": {
-    "@kadira/react-native-storybook": "^2.0.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "19.0.0",
