@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 import { offline } from 'redux-offline';
 import { autoRehydrate } from 'redux-persist';
 import defaultOfflineConfig from 'redux-offline/lib/defaults';
+import applyAppStateListener from 'redux-enhancer-react-native-appstate';
 
 import dismissKeyboard from './middlewares/dissmissKeyboard';
 import { setStore } from 'starterApp/src/lib/api';
@@ -29,7 +30,7 @@ export default (callback: Function): Store => {
       return api[method](...params);
     },
   };
-  const enhancers = [applyMiddleware(...middlewares), autoRehydrate()];
+  const enhancers = [applyAppStateListener(), applyMiddleware(...middlewares), autoRehydrate()];
   const store = offline(offlineConfig)(createStore)(reducers, composeEnhancers(...enhancers));
 
   sagaMiddleware.run(rootSaga);
