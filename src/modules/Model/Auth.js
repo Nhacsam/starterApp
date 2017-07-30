@@ -59,6 +59,23 @@ export function authModelReducer(
 // SELECTORS
 export const accessTokenSelector = (state: StateType): ?string => state.model.auth.id;
 export const authUserIdSelector = (state: StateType): ?number => state.model.auth.userId;
+export const accessTokenTtlSelector = (state: StateType): ?number => state.model.auth.ttl;
+export const accessTokenCreationDateSelector = (state: StateType): ?Date => {
+  const created = state.model.auth.created;
+  if (!created) {
+    return null;
+  }
+  return new Date(created);
+};
+
+export const accessTokenExpirationDateSelector = (state: StateType): number => {
+  const accessTokenCreationDate = accessTokenCreationDateSelector(state);
+  const ttl = accessTokenTtlSelector(state);
+  if (!accessTokenCreationDate) {
+    return 0;
+  }
+  return accessTokenCreationDate.getTime() + ttl;
+};
 
 // SAGAS
 function* sendLoginSaga(action): Generator<*, *, *> {

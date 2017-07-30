@@ -20,5 +20,6 @@ export default function* rootSaga(): Generator<*, *, *> {
     fork(tvShowModelSaga),
     fork(tvShowMainListSaga),
     fork(tvShowDetailSaga),
+    fork(appLifecycleSaga),
   ]);
 }
