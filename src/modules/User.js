@@ -8,6 +8,7 @@ import type { UserModelActionType } from './Model/User';
 
 import I18n from 'lib/i18n';
 
+import { putModelAction, isLoadingSelector, haveFailedSelector } from './ApiCallState';
 import { authUserIdSelector } from './Model/Auth';
 import { login } from './Auth';
 import { valueSelector } from './SingleInputForm';
@@ -27,11 +28,6 @@ export const register = (user: UserType): UserActionType => ({
 });
 
 // TYPES
-export type UserStateType = {
-  registering: boolean,
-  registerFailure: boolean,
-};
-
 export type UserActionType = {
   type: 'USER.REGISTER',
   payload: {
@@ -39,43 +35,11 @@ export type UserActionType = {
   },
 };
 
-const initialState: UserStateType = {
-  registering: false,
-  registerFailure: false,
-};
-
-// REDUCER
-export function userReducer(
-  state: UserStateType = initialState,
-  action: UserActionType | UserModelActionType
-): UserStateType {
-  switch (action.type) {
-    case 'USER.REGISTER':
-      return {
-        ...state,
-        registering: true,
-        registerFailure: false,
-      };
-    case 'USER.CREATE_SUCCESS':
-      return {
-        ...state,
-        registering: false,
-        registerFailure: false,
-      };
-    case 'USER.CREATE_FAILURE':
-      return {
-        ...state,
-        registering: false,
-        registerFailure: true,
-      };
-    default:
-      return state;
-  }
-}
-
 // SELECTORS
-export const registeringSelector = (state: StateType): boolean => state.user.registering;
-export const registeringFailureSelector = (state: StateType): boolean => state.user.registerFailure;
+export const registeringSelector = (state: StateType): boolean =>
+  isLoadingSelector(state, 'register');
+export const registeringFailureSelector = (state: StateType): boolean =>
+  haveFailedSelector(state, 'register');
 export const currentUserSelector = (state: StateType): ?UserType => {
   const userId = authUserIdSelector(state);
   if (!userId) {
@@ -87,15 +51,22 @@ export const currentUserSelector = (state: StateType): ?UserType => {
 // SAGAS
 function* sendRegisterSaga(action): Generator<*, *, *> {
   const { user } = action.payload;
-  yield put(create(user));
-  const result = yield race({
-    success: take('USER.CREATE_SUCCESS'),
-    failure: take('USER.CREATE_FAILURE'),
+  const success = yield* putModelAction({
+    action: create(user),
+    successAction: 'USER.CREATE_SUCCESS',
+    failureAction: 'USER.CREATE_FAILURE',
+    name: 'register',
   });
-  if (result.failure) {
+
+  if (!success) {
     return;
   }
-  yield put(login(user.email, user.password));
+  yield* putModelAction({
+    action: login(user.email, user.password),
+    successAction: 'AUTH.LOGIN_SUCCESS',
+    failureAction: 'AUTH.LOGIN_FAILURE',
+    name: 'register',
+  });
 }
 
 function* updateUserSaga(action): Generator<*, *, *> {
@@ -110,12 +81,13 @@ function* updateUserSaga(action): Generator<*, *, *> {
     ...prevUser,
     [attr]: value,
   };
-  yield put(update(user, true));
-  const result = yield race({
-    success: take('USER.UPDATE_SUCCESS'),
-    failure: take('USER.UPDATE_FAILURE'),
+  const success = yield* putModelAction({
+    action: update(user, true),
+    successAction: 'USER.UPDATE_SUCCESS',
+    failureAction: 'USER.UPDATE_FAILURE',
   });
-  if (result.failure) {
+
+  if (!success) {
     Toast.show(I18n.t('user.update_failure'));
   }
 }

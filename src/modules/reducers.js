@@ -2,7 +2,7 @@
 
 import { combineReducers } from 'redux';
 
-import { userReducer, type UserStateType, type UserActionType } from './User';
+import { type UserActionType } from './User';
 import { userModelReducer, type UserModelStateType, type UserModelActionType } from './Model/User';
 import { authReducer, type AuthStateType, type AuthActionType } from './Auth';
 import { authModelReducer, type AuthModelStateType, type AuthModelActionType } from './Model/Auth';
@@ -30,17 +30,23 @@ import {
   type SingleInputActionsType,
 } from './SingleInputForm';
 
+import {
+  reducer as apiCallStateReducer,
+  type StateType as ApiCallStateStateType,
+  type ActionType as ApiCallStateActionsType,
+} from './ApiCallState.js';
+
 import { default as navigationReducer } from './Navigation/reducer.js';
 
 import type { NavigationState, NavigationAction } from 'react-navigation';
 
 export type StateType = {
   nav: NavigationState,
-  user: UserStateType,
   auth: AuthStateType,
   singleInputForm: SingleInputStateType,
   tvShowMainList: TvShowMainListStateType,
   tvShowDetail: TvShowDetailStateType,
+  apiCallState: ApiCallStateStateType,
   model: {
     auth: AuthModelStateType,
     user: UserModelStateType,
@@ -57,15 +63,16 @@ export type ActionType =
   | TvShowModelActionType
   | TvShowMainListActionType
   | TvShowDetailActionType
-  | SingleInputActionsType;
+  | SingleInputActionsType
+  | ApiCallStateActionsType;
 
 const appReducer = combineReducers({
   nav: navigationReducer,
-  user: userReducer,
   auth: authReducer,
   singleInputForm: singleInputReducer,
   tvShowMainList: tvShowMainListReducer,
   tvShowDetail: tvShowDetailReducer,
+  apiCallState: apiCallStateReducer,
   model: combineReducers({
     auth: authModelReducer,
     user: userModelReducer,
