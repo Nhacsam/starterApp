@@ -1,7 +1,13 @@
 // @flow
 import { takeLatest, put, all, throttle } from 'redux-saga/effects';
 
-import { fetchList, listSelector, entitiesSelector, search as searchRequest } from './Model/TvShow';
+import {
+  fetchList,
+  entityListSelector,
+  entitiesSelector,
+  search as searchRequest,
+  actionTypes,
+} from './Model/TvShow';
 
 import type { TvShowModelActionType as ModelActionType } from './Model/TvShow';
 import type { TvShowType } from 'modelDefinition';
@@ -72,49 +78,43 @@ export function reducer(
         ...state,
         refreshing: true,
       };
-    case 'TV_SHOW.FETCH_LIST':
+    case actionTypes.fetchList:
       return {
         ...state,
         fetching: true,
         error: false,
+        currentSearch: action.payload.query,
       };
-    case 'TV_SHOW.FETCH_LIST_SUCCESS':
-      return {
-        ...state,
-        fetching: false,
-        refreshing: false,
+    case actionTypes.fetchListSuccess:
+      var newState = {
         results: action.payload.result.results,
         page: action.payload.result.page,
         totalResults: action.payload.result.total_results,
         totalPages: action.payload.result.total_pages,
       };
-    case 'TV_SHOW.FETCH_LIST_FAILURE':
+      if (action.payload.query) {
+        return {
+          ...state,
+          searches: {
+            ...state.searches,
+            [action.payload.query]: newState,
+          },
+        };
+      }
+
+      return {
+        ...state,
+        fetching: false,
+        refreshing: false,
+        ...newState,
+      };
+    case actionTypes.fetchListFailure:
       return {
         ...state,
         fetching: false,
         refreshing: false,
         error: true,
       };
-    case 'TV_SHOW.SEARCH':
-      return {
-        ...state,
-        currentSearch: action.payload.query,
-      };
-    case 'TV_SHOW.SEARCH_SUCCESS':
-      console.log(action);
-      return {
-        ...state,
-        searches: {
-          ...state.searches,
-          [action.payload.query]: {
-            results: action.payload.result.results,
-            page: action.payload.result.page,
-            totalResults: action.payload.result.total_results,
-            totalPages: action.payload.result.total_pages,
-          },
-        },
-      };
-
     case 'persist/REHYDRATE':
       return {
         ...state,
@@ -136,14 +136,14 @@ export const tvShowsSelector = (state: GlobalStateType): TvShowType[] => {
   if (currentSearch) {
     const searchState = state.tvShowMainList.searches[currentSearch];
     if (searchState) {
-      return listSelector(state, searchState.results);
+      return entityListSelector(state, searchState.results);
     }
 
     return entitiesSelector(state).filter((tvShow: TvShowType) => {
       return tvShow.name.toLowerCase().includes(currentSearch.toLowerCase());
     });
   }
-  return listSelector(state, state.tvShowMainList.results);
+  return entityListSelector(state, state.tvShowMainList.results);
 };
 
 // SAGAS

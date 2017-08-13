@@ -4,7 +4,7 @@ import { userSaga } from './User';
 import { userModelSaga } from './Model/User';
 import { authSaga } from './Auth';
 import { authModelSaga } from './Model/Auth';
-import { tvShowModelSaga } from './Model/TvShow';
+import { saga as tvShowModelSaga } from './Model/TvShow';
 import { saga as tvShowMainListSaga } from './TvShowMainList';
 import { saga as tvShowDetailSaga } from './TvShowDetail';
 import { saga as appLifecycleSaga } from './AppLifecycle';

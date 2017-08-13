@@ -1,7 +1,7 @@
 // @flow
 import { takeLatest, put, all } from 'redux-saga/effects';
 
-import { fetch, entitySelector } from './Model/TvShow';
+import { fetchOne, entitySelector } from './Model/TvShow';
 import { NavigationActions } from 'react-navigation';
 
 import type { TvShowModelActionType as ModelActionType } from './Model/TvShow';
@@ -49,7 +49,7 @@ export const tvShowSelector = (state: GlobalStateType): ?TvShowType =>
 
 // SAGAS
 function* showDetailSaga(action): Generator<*, *, *> {
-  yield put(fetch(action.payload.id));
+  yield put(fetchOne(action.payload.id));
   yield put(NavigationActions.navigate({ routeName: 'tvShowDetail' }));
 }
 

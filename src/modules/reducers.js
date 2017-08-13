@@ -7,7 +7,7 @@ import { userModelReducer, type UserModelStateType, type UserModelActionType } f
 import { authReducer, type AuthStateType, type AuthActionType } from './Auth';
 import { authModelReducer, type AuthModelStateType, type AuthModelActionType } from './Model/Auth';
 import {
-  tvShowModelReducer,
+  default as tvShowModelReducer,
   type TvShowModelStateType,
   type TvShowModelActionType,
 } from './Model/TvShow';

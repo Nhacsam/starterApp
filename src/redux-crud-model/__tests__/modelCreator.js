@@ -104,5 +104,48 @@ describe('ModelCreator', () => {
       expect(selectors.entitySelector(state, 'the-id')).toBeUndefined();
       expect(selectors.statusSelector(state, 'the-id')).toBe('unknown');
     });
+
+    it('should handle hashmap as ids', () => {
+      const ids = [2, 8];
+      const { selectors } = createModelModule({
+        name: 'myEntity',
+      });
+      const entities = [{ id: ids[0], name: 'John' }, { id: ids[1], name: 'Foo' }];
+      const state = {
+        entities: {
+          [ids[0]]: entities[0],
+          [ids[1]]: entities[1],
+        },
+      };
+
+      expect(selectors.entityListSelector(state, { id1: ids[0], foo: ids[1] })).toEqual(entities);
+    });
+
+    it('should accept selector to get the store', () => {
+      const ids = [2, 8];
+      const { selectors } = createModelModule({
+        name: 'myEntity',
+        storeSelector: state => state.storeName,
+      });
+      const entities = [{ id: ids[0], name: 'John' }, { id: ids[1], name: 'Foo' }];
+      const state = {
+        storeName: {
+          entities: {
+            [ids[0]]: entities[0],
+            [ids[1]]: entities[1],
+          },
+          status: {
+            [ids[0]]: 'fetched',
+          },
+        },
+      };
+
+      expect(selectors.entityListSelector(state, ids)).toEqual(entities);
+      expect(selectors.entitiesSelector(state)).toEqual(entities);
+      expect(selectors.statusSelector(state, ids[0])).toEqual('fetched');
+
+      expect(selectors.entityListSelector(state)(ids)).toEqual(entities);
+      expect(selectors.statusSelector(state)(ids[0])).toEqual('fetched');
+    });
   });
 });

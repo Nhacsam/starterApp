@@ -10,6 +10,7 @@ import type {
   Reducer,
   Selectors,
   Creators,
+  LocalSelectors,
 } from './TypeDefinitions.js';
 
 function createActionTypes(name: string): ActionTypes {
@@ -67,7 +68,8 @@ function createModulSelectors<E>(moduleParams: ModuleParams<E>): Selectors<E> {
   // prettier-ignore
   const entityListSelector = (state, ids) => R.compose(
     R.filter((entity: ?E): boolean => !!entity),
-    R.map(id => entitySelector(state, id))
+    R.map(id => entitySelector(state, id)),
+    R.values
   )(ids);
 
   return {
@@ -83,40 +85,52 @@ function createModueActionCreators<E>(moduleParams: ModuleParams<E>): Creators<E
   const actionTypes = createActionTypes(name);
 
   return {
-    fetchOne: id => ({
+    fetchOne: (id, context) => ({
       type: actionTypes.fetchOne,
-      payload: { id },
+      payload: { id, ...context },
     }),
-    fetchOneSuccess: normalizedResult => ({
+    fetchOneSuccess: (normalizedResult, context) => ({
       type: actionTypes.fetchOneSuccess,
       payload: {
         result: normalizedResult.result,
+        ...context,
       },
       entities: normalizedResult.entities,
     }),
-    fetchOneFailed: (id, error) => ({
+    fetchOneFailed: (id, error, context) => ({
       type: actionTypes.fetchOneFailed,
-      payload: { id },
+      payload: { id, ...context },
       error,
     }),
-    fetchList: name => ({
+    fetchList: (name, context) => ({
       type: actionTypes.fetchList,
-      payload: { name },
+      payload: { name, ...context },
     }),
-    fetchListSuccess: (normalizedResult, name) => ({
+    fetchListSuccess: (normalizedResult, name, context) => ({
       type: actionTypes.fetchListSuccess,
       payload: {
         name,
         result: normalizedResult.result,
+        ...context,
       },
       entities: normalizedResult.entities,
     }),
-    fetchListFailed: (error, name) => ({
+    fetchListFailed: (error, name, context) => ({
       type: actionTypes.fetchListFailed,
-      payload: { name },
+      payload: { name, ...context },
       error,
     }),
   };
+}
+
+function mapReselect<E>(moduleParams: ModuleParams<E>): (LocalSelectors<E>) => Selectors<E> {
+  const defaultSelector = (state: Object): State<E> => state;
+  const storeSelector = moduleParams.storeSelector || defaultSelector;
+
+  const composeSelector = selector =>
+    R.curryN(R.length(selector), (...args) => selector(...R.adjust(storeSelector, 0, args)));
+
+  return R.map(composeSelector);
 }
 
 export default function createModelModule<E>(moduleParams: ModuleParams<E>): Module<E> {
@@ -124,13 +138,15 @@ export default function createModelModule<E>(moduleParams: ModuleParams<E>): Mod
 
   const actionTypes = createActionTypes(name);
   const reducer = createModuleReducer(moduleParams);
-  const selectors = createModulSelectors(moduleParams);
+  const localSelectors = createModulSelectors(moduleParams);
   const actionCreators = createModueActionCreators(moduleParams);
+  const selectors = mapReselect(moduleParams)(localSelectors);
 
   return {
     actionTypes,
     reducer,
     selectors,
+    localSelectors,
     actionCreators,
   };
 }

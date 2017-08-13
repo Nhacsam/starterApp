@@ -7,80 +7,34 @@ import * as api from 'starterApp/src/lib/api';
 
 import { tvShowSchema } from 'modelDefinition';
 
-import type { TvShowType, NormalizedResultType, NormalizedEntitiesType } from 'modelDefinition';
+import type { TvShowType } from 'modelDefinition';
 import type { StateType } from '../reducers';
-import type { Module, State as ModuleStateType } from 'redux-crud-model/TypeDefinitions';
+import type { Module, State } from 'redux-crud-model/TypeDefinitions';
 
 const { actionTypes, reducer, actionCreators, selectors }: Module<TvShowType> = createModelModule({
   name: 'tvShows',
+  storeSelector: (state: StateType): State<TvShowType> => state.model.tvShow,
 });
 
-// TYPES
+export { actionTypes };
+export const {
+  fetchList,
+  fetchListSuccess,
+  fetchListFailed,
+  fetchOne,
+  fetchOneSuccess,
+  fetchOneFailed,
+} = actionCreators;
 
-export type TvShowModelActionType =
-  | {
-      type: 'TV_SHOW.SEARCH',
-      payload: { query: string },
-    }
-  | {
-      type: 'TV_SHOW.SEARCH_SUCCESS',
-      payload: {
-        result: any,
-        query: string,
-      },
-      entities: NormalizedEntitiesType,
-    }
-  | {
-      type: 'TV_SHOW.SEARCH_FAILURE',
-      payload: {},
-    };
+export const { entitySelector, entityListSelector, entitiesSelector } = selectors;
 
-export type TvShowModelStateType = ModuleStateType<TvShowType>;
+export default reducer;
 
 // ACTION CREATORS
-export const fetchList = actionCreators.fetchList;
-export const fetchListSuccess = actionCreators.fetchListSuccess;
-export const fetchListFailure = actionCreators.fetchListFailed;
-export const fetch = actionCreators.fetchOne;
-export const fetchSuccess = actionCreators.fetchOneSuccess;
-export const fetchFailure = actionCreators.fetchOneFailed;
-
-export const search = (query: string): TvShowModelActionType => ({
-  type: 'TV_SHOW.SEARCH',
-  payload: { query },
-});
-export const searchSuccess = (
-  result: NormalizedResultType,
-  query: string
-): TvShowModelActionType => ({
-  type: 'TV_SHOW.SEARCH_SUCCESS',
-  entities: result.entities,
-  payload: { result: result.result, query },
-});
-
-export const searchFailure = (): TvShowModelActionType => ({
-  type: 'TV_SHOW.SEARCH_FAILURE',
-  payload: {},
-});
-
-// REDUCER
-export const tvShowModelReducer = reducer;
-
-// SELECTORS
-
-const stateSelector = (state: StateType): TvShowModelStateType => state.model.tvShow;
-const composeSelector = selector => (state, ...param) => selector(stateSelector(state), ...param);
-
-export const entitySelector: (StateType, number) => ?TvShowType = composeSelector(
-  selectors.entitySelector
-);
-export const listSelector: (
-  StateType,
-  number[] | { [any]: number }
-) => TvShowType[] = composeSelector(selectors.entityListSelector);
-export const entitiesSelector: StateType => TvShowType[] = composeSelector(
-  selectors.entitiesSelector
-);
+export const search = (query: string) => actionCreators.fetchList('search', { query });
+export const searchSuccess = (results: *, query: string) =>
+  actionCreators.fetchListSuccess(results, 'search', { query });
+export const searchFailure = (e: *) => actionCreators.fetchListFailed(e, 'search');
 
 // SAGAS
 const tvShowListSchema = {
@@ -88,24 +42,24 @@ const tvShowListSchema = {
 };
 
 function* fetchListSaga(action): Generator<*, *, *> {
-  console.log('fetchListSaga', action);
+  if (action.payload.query) {
+    return yield* searchSaga(action);
+  }
+
   try {
     const response = yield call(api.getTvShows);
-    console.log(response);
-    const normalizedResonse = normalize(response, tvShowListSchema);
-    yield put(fetchListSuccess(normalizedResonse));
+    yield put(fetchListSuccess(normalize(response, tvShowListSchema)));
   } catch (e) {
-    console.error(e);
-    yield put(fetchListFailure(e));
+    yield put(fetchListFailed(e));
   }
 }
 
 function* fetchSaga(action): Generator<*, *, *> {
   try {
     const response = yield call(api.getTvShow, action.payload.id);
-    yield put(fetchSuccess(normalize(response, tvShowSchema)));
+    yield put(fetchOneSuccess(normalize(response, tvShowSchema)));
   } catch (e) {
-    yield put(fetchFailure(e));
+    yield put(fetchOneFailed(action.payload.id, e));
   }
 }
 
@@ -114,14 +68,13 @@ function* searchSaga(action): Generator<*, *, *> {
     const response = yield call(api.searchTvShow, action.payload.query);
     yield put(searchSuccess(normalize(response, tvShowListSchema), action.payload.query));
   } catch (e) {
-    yield put(searchFailure());
+    yield put(searchFailure(e));
   }
 }
 
-export function* tvShowModelSaga(): Generator<*, *, *> {
+export function* saga(): Generator<*, *, *> {
   yield all([
     takeLatest(actionTypes.fetchList, fetchListSaga),
     takeLatest(actionTypes.fetchOne, fetchSaga),
-    takeLatest('TV_SHOW.SEARCH', searchSaga),
   ]);
 }
