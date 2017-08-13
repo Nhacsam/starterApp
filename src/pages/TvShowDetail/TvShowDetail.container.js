@@ -2,11 +2,10 @@
 import { connect } from 'react-redux';
 import TvShowDetail from './TvShowDetail';
 
-import { tvShowSelector, fetchingSelector } from 'modules/TvShowDetail';
+import { tvShowSelector } from 'modules/TvShowDetail';
 
 const mapStateToProps = state => ({
   tvShow: tvShowSelector(state),
-  fetching: fetchingSelector(state),
 });
 
 const mapDispatchToProps = {};

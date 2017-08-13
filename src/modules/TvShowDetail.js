@@ -20,12 +20,10 @@ export type ActionType = {
 };
 
 export type StateType = {
-  fetching: boolean,
   current: ?number,
 };
 
 const initialState: StateType = {
-  fetching: false,
   current: null,
 };
 
@@ -40,28 +38,12 @@ export function reducer(
         ...state,
         current: action.payload.id,
       };
-    case 'TV_SHOW.FETCH_ONE':
-      return {
-        ...state,
-        fetching: true,
-      };
-    case 'TV_SHOW.FETCH_LIST_SUCCESS':
-      return {
-        ...state,
-        fetching: false,
-      };
-    case 'TV_SHOW.FETCH_LIST_FAILURE':
-      return {
-        ...state,
-        fetching: false,
-      };
     default:
       return state;
   }
 }
 
 // SELECTORS
-export const fetchingSelector = (state: GlobalStateType): boolean => state.tvShowDetail.fetching;
 export const tvShowSelector = (state: GlobalStateType): ?TvShowType =>
   state.tvShowDetail.current ? entitySelector(state, state.tvShowDetail.current) : null;
 

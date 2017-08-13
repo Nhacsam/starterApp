@@ -21,6 +21,7 @@ if (__DEV__) {
 }
 
 const checkStatus = (response: Response): Promise<Object> => {
+  console.log(response);
   if (response.status >= 200 && response.status < 300) {
     if (response.status !== 204) return response.json();
     return response;
@@ -51,6 +52,7 @@ export const request = (
     headers['Authorization'] = accessToken;
   }
 
+  console.log('fetch', url);
   return fetch(url, {
     method,
     headers,
